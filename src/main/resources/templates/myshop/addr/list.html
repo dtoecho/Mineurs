@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/inc/layout}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="/js/myshop/addr/list.js"></script>
+</head>
+<body>
+<main layout:fragment="main" class="container mx-auto px-20 mt-20">
+  <form id="delete" method="post">
+    <section class="w-full">
+      <h1 class="hidden">주소 리스트</h1>
+      <div class="text-center font-serif">Address List</div>
+      <div class="w-full mt-10">
+        <div>
+          <table class="border border-slate-800 w-full">
+            <colgroup>
+              <col class="w-7" />
+              <col class="w-24" />
+              <col class="w-24" />
+              <col class="w-32" />
+              <col class="w-auto" />
+              <col class="w-20" />
+            </colgroup>
+            <thead class="font-sans">
+            <th class="border border-slate-800">
+              <input id="selectAllCheckbox" type="checkbox" onclick="toggleCheckboxes(this)" />
+            </th>
+            <th class="border border-slate-800 font-medium text-sm">배송지명</th>
+            <th class="border border-slate-800 font-medium text-sm">수령인</th>
+            <th class="border border-slate-800 font-medium text-sm">휴대전화</th>
+            <th class="border border-slate-800 font-medium text-sm">주소</th>
+            <th class="border border-slate-800 font-medium text-sm">수정</th>
+            </thead>
+            <tbody class="text-center">
+            <tr th:each="address : ${addresses}">
+              <td><input type="checkbox" name="addressIds" th:value="${address.id}" /></td>
+              <td class="text-xs" th:text="${address.name}">배송지명</td>
+              <td class="text-xs" th:text="${address.receiverName}">이름</td>
+              <td class="text-xs" th:text="${address.phoneNumber}">폰번호</td>
+              <td class="text-xs">
+                <span th:text="${address.address}"></span>
+                <span th:text="${address.extraAddress}"></span>
+                <span th:text="${address.detailAddress}"></span>
+              </td>
+              <td class="text-xs">
+                <div>
+                  <a th:href="'/myshop/addr/modify/' + ${address.id}" class="inline-block border border-slate-800 w-14 h-7 text-xs px-3 py-1 bg-white text-black hover:bg-neutral-300 duration-300 ease-in-out">수정</a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex mt-3 justify-between">
+        <div class="flex">
+          <div class="text-center pl-2">
+            <button type="submit" class="inline-block border border-slate-800 w-28 h-7 text-xs px-1 py-1 hover:bg-neutral-300 duration-300 ease-in-out">선택 주소록 삭제</button>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="text-center pl-2">
+            <a href="register" class="flex justify-center items-center border border-slate-800 w-32 h-10 text-xs px-3 py-1 bg-white hover:bg-neutral-300 duration-300 ease-in-out">배송지등록</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</main>
+</body>
+</html>

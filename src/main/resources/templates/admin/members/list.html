@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/admin/inc/layout}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+
+<body>
+    <main layout:fragment="main" class="n-panel n-main-panel d:flex flex-direction:column container mx-auto px-10">
+        <form class="n-form md:n-field-label-position:left w:3/5 mx:auto my-12">
+            <div>
+                <select class="border" name="searchMethod">
+                    <option th:selected="${param.searchMethod} == 'name'" value="name">이름</option>
+                    <option th:selected="${{param.searchMethod}} == 'login-id'" value="login-id">유저아이디</option>
+                </select>
+                <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요"
+                    th:value="${#strings.trim(param.searchKeyword)}" class="border-2" />
+                <button class="btn btn-sm">검색</button>
+            </div>
+        </form>
+
+        <table class="border-2 table table-zebra text-center mx-auto w-full">
+            <thead class="border-b-2 h-10">
+                <tr>
+                    <th scope="col">고객 이름</th>
+                    <th scope="col">아이디</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">이메일</th>
+                    <th scope="col">등록일자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="member: ${list}" class="h-14 text-sm">
+                    <td scope="col" class="text-center"><a th:href="@{./members/detail(id=${member.id})}"
+                            th:text="${member.name}"
+                            class="text-xl">이름</a></td>
+                    <td scope="col" class="text-center" th:text="${member.username}">아이디</td>
+                    <td scope="col" class="text-center" th:text="${member.phoneNumber}">전화번호</td>
+                    <td scope="col" class="text-center" th:text="${member.email}">이메일</td>
+                    <td scope="col" class="text-center" th:text="${#dates.format(member.regDate, 'yyyy년 M월 d일') }">등록일자
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- 페이저 -->
+        <section class="join flex justify-center" th:with="page = (${param.p} == null)? 1 : ${{param.p}} 
+                , floatnum=(${page}-1)/5,
+                intnum=${T(java.lang.Math).floor(floatnum)},
+                startnum=${intnum}*5+1,
+                lastnum = ${count} mod 10 > 0 ? ${count / 10} + 1 : ${count / 10} + 0">
+            <h1 class="hidden">페이저</h1>
+            <div>
+                <span th:if="${page} lt 6" class="btn">이전</span>
+                <a th:if="${page} ge 6"
+                    th:href="@{./members(p=${startnum}-1,searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword})}">
+                    이전
+                </a>
+            </div>
+            <div>
+                <a th:each="n : ${#numbers.sequence(startnum,startnum+4)}"
+                    th:href="@{./members(p=${n},searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword})}"
+                    th:if="${n} le ${lastnum}" class="btn" th:classappend="${{param.p}} eq ${n}? 'btn-active'"
+                    th:text="${n}">1
+                </a>
+            </div>
+            <div>
+                <span th:if="${startnum+5} gt ${lastnum}" class="btn">다음</span>
+                <a th:if="${startnum+5} le ${lastnum}"
+                    th:href="@{./members(p=${startnum}+5,searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword})}">
+                    다음
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

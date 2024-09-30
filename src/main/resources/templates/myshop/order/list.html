@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/inc/layout}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css" />
+</head>
+
+<body>
+    <main layout:fragment="main" class="container mx-auto px-10 mt-20">
+        <h1 class="hidden">주문 내역</h1>
+        <div class="text-center py-3 font-serif">Order List</div>
+
+        <div class="my-10">
+            <div role="tablist" class="tabs tabs-bordered w-3/4 mx-auto">
+                <a role="tab" class="tab" href="">주문내역조회(<span th:text="${#lists.size(orderPage.content)}"></span>)</a>
+                <!-- <a role="tab" class="tab tab-active">미가용적립내역보기</a>
+            <a role="tab" class="tab">미가용쿠폰/회원등급적립내역</a> -->
+            </div>
+        </div>
+        <!--    검색 -->
+
+        <section class="overflow-x-auto w-full flex flex-col">
+            <form method="get" action="/myshop/order/list" class="">
+                <table class="table">
+                    <colgroup>
+                        <col class="bg-base-300" />
+                    </colgroup>
+
+                <tbody>
+                <tr>
+                    <td>주문일</td>
+                    <td colspan="3">
+                        <div class="flex space-x-5">
+                            <div class="flex space-x-1">
+                                <div class="flex space-x-1 items-center">
+                                    <input
+                                            type="date"
+                                            name="calendarStart"
+                                            th:value="${calendarStart}"
+                                    />
+                                    <span>~</span>
+                                    <input
+                                            type="date"
+                                            name="calendarEnd"
+                                            th:value="${calendarEnd}"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="self-center flex space-x-2 justify-center">
+                <button class="btn btn-wide">검색</button>
+                <a th:href="@{/myshop/order/list}" class="btn btn-wide btn-outline"
+                >초기화</a
+                >
+            </div>
+        </form>
+    </section>
+
+
+        <section class="mt-10">
+            <h1 class="text-2xl mb-0">주문 목록</h1>
+            <div class="overflow-x-auto w-full">
+
+                <table class="table table-zebra text-center">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th scope="col">주문일</th>
+                         <th scope="col">주문자</th>
+                        <th scope="col">상품명</th>
+                        <th scope="col">총 상품구매금액</th>
+                        <th scope="col">총 실결제금액</th>
+                        <!-- <th scope="col">결제수단</th> -->
+                        <th scope="col">주문상태</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="order : ${orderPage.content}">
+
+                            <!--                <td scope="col" th:text="${product.categoryName}">카테고리 이름</td>-->
+                            <td scope="col" th:text="${#dates.format(order.orderedDatetime, 'yyyy-MM-dd')}">주문일</td>
+                                <!--                <td scope="col" th:text="${product.supplyingPrice}">공급가</td>-->
+                            <!--                <td scope="col" th:text="${product.description}">설명</td>-->
+                            <!-- <td scope="col"> <img
+                                class="py-3"
+                                th:src="@{|/webapp/image/products/${order.pImgPath}|}"
+                                alt=""
+                        /></td> -->
+                            <td scope="col">
+                                <div>
+                                    <a th:href="@{detail(id=${order.id})}">
+                                        <img class="py-3 h-56"
+                                             th:src="@{|/src/main/webapp/image/products/${order.pImgPath}|}"
+                                             alt=""
+                                        />
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td scope="col">
+                                <a th:href="@{detail(id=${order.id})}">
+                                    <span th:each="productName : ${order.productNames}" th:text="${productName}">
+                                        상품명
+                                    </span>
+                                    <div th:if="${order.productsCount > 1}">
+                                        <span th:text="|외 ${order.productsCount-1}개|">개수</span>
+                                    </div>
+                                </a>
+                            </td>
+                            <td scope="col" th:text="${#numbers.formatInteger(order.totalProductPrice, 0, 'COMMA') +'원'}">
+                                총 상품구매금액
+                            </td>
+                            <td scope="col"
+                                th:text="${#numbers.formatInteger(order.totalProductPrice - order.totalDiscountAmount, 0, 'COMMA') + '원'}">
+                                총 실결제금액
+                            </td>
+                            <!-- <td scope="col" th:text="${order.paymentMethod}">결제수단</td> -->
+                            <!--                <td>No</td>-->
+                            <td scope="col" th:text="${order.orderState}">주문상태</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+        <!-- 페이징 -->
+        <div class="flex justify-center">
+            <div th:replace="~{/inc/pagination ::  pagination(${orderPage})}"></div>
+        </div>
+    </main>
+</body>
+
+</html>

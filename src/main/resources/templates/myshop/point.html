@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main layout:fragment="main" class="container mx-auto px-20 mt-20">
+      <section class="w-full">
+        <h1 class="hidden">적립금</h1>
+        <div class="text-center font-serif py-3">Point</div>
+        <div class="text-center font-sans text-sm text-gray-400 pb-8">
+          고객님의 사용가능 적립금 금액입니다.
+        </div>
+        <ul
+          class="relative border py-5 border-slate-800 grid grid-cols-2 before:content-[''] before:absolute before:left-1/2 before:block before:h-full before:border before:border-gray-200"
+        >
+          <li class="flex justify-between px-12 text-xs py-3">
+            총 적립금
+            <span
+              th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')} +원"
+            ></span>
+          </li>
+          <li class="flex justify-between px-12 text-xs py-3">
+            사용가능 적립금
+            <span
+              th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')} +원"
+              >3000원</span
+            >
+          </li>
+          <li class="flex justify-between px-12 text-xs py-3">
+            사용된 적립금 <span>0원</span>
+          </li>
+          <li class="flex justify-between px-12 text-xs py-3">
+            미가용 적립금<span>0원</span>
+          </li>
+          <li class="flex justify-between px-12 text-xs py-3">
+            환불예정 적립금 <span>0원</span>
+          </li>
+        </ul>
+
+        <div class="my-10">
+          <div role="tablist" class="tabs tabs-bordered w-3/4 mx-auto">
+            <a role="tab" class="tab">적립내역</a>
+            <!-- <a role="tab" class="tab tab-active">미가용적립내역보기</a>
+            <a role="tab" class="tab">미가용쿠폰/회원등급적립내역</a> -->
+          </div>
+        </div>
+        <div>
+          <table class="w-full text-sm">
+            <thead class="border border-slate-800">
+              <th class="font-normal px-2 py-2">주문날짜</th>
+              <th class="font-normal px-2 py-2 border-l border-slate-800">
+                적립금
+              </th>
+              <th class="font-normal px-2 py-2 border-l border-slate-800">
+                관련 주문
+              </th>
+              <th class="w-2/5 px-2 py-2 font-normal border-l border-slate-800">
+                내용
+              </th>
+            </thead>
+            <tbody class="border border-slate-800">
+              <tr th:each="pointView : ${pointList}">
+                <td class="text-center py-3" th:text="${pointView.regDate}">
+                  등록날짜
+                </td>
+                <td
+                  class="text-center"
+                  th:text="${#numbers.formatInteger(pointView.point, 0, 'COMMA')} +원"
+                >
+                  포인트적립금
+                </td>
+                <td class="text-center">
+                  <span th:text="${pointView.productNames}">주문명</span>
+                  <div th:if="${pointView.count > 1}">
+                    <span th:text="|외 ${pointView.count-1}개|">개수</span>
+                  </div>
+                </td>
+                <td class="text-center" th:text="${pointView.contents}">
+                  내용
+                </td>
+                <td class="text-center" th:text="${pointView.code}">
+                  상품코드
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-5">
+          <h1 class="font-semibold">적립금 안내</h1>
+          <div class="border border-slate-800">
+            <ul class="list-decimal text-sm my-3">
+              <li class="ml-5">
+                주문으로 발생한 적립금은 배송완료 후 20일 부터 실제 사용 가능한
+                적립금으로 전환됩니다. 배송완료 시점으로부터 20일 동안은 미가용
+                적립금으로 분류됩니다.
+              </li>
+              <li class="ml-5">
+                미가용 적립금은 반품, 구매취소 등을 대비한 임시 적립금으로
+                사용가능 적립금으로 전환되기까지 상품구매에 사용하실 수
+                없습니다.
+              </li>
+              <li class="ml-5">
+                사용가능 적립금(총적립금 - 사용된적립금 - 미가용적립금)은
+                상품구매 시 바로 사용가능합니다.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

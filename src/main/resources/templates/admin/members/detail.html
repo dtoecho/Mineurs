@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/admin/inc/layout}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+
+<body>
+    <main layout:fragment="main"
+        class="text-xl n-panel n-main-panel d:flex flex-direction:column container mx-auto px-10">
+        <a href="/admin/members">
+            <div class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg mb-5">뒤로가기</div>
+        </a>
+        <!-- 멤버 정보 -->
+        <section class="border-2 py-6">
+            <h1 class="text-2xl font-bold m-2 mb-6">고객 정보</h1>
+            <div class="m-2">
+                <div class="flex ">
+                    <div class="pr-10 font-bold">이름</div>
+                    <div th:text="${member.name}">고객이름</div>
+                </div>
+                <div class="flex">
+                    <div class="pr-10 font-bold">아이디</div>
+                    <div th:text="${member.username}">아이디</div>
+                </div>
+                <div class="flex">
+                    <div class="pr-10 font-bold">전화번호</div>
+                    <div th:text="${member.phoneNumber}">전화번호</div>
+                </div>
+                <div class="flex">
+                    <div class="pr-10 font-bold">이메일</div>
+                    <div th:text="${member.email}">이메일</div>
+                </div>
+                <div class="flex">
+                    <div class="pr-10 font-bold">가입일자</div>
+                    <div th:text="${#dates.format(member.regDate, 'yyyy년 M월 d일 HH:mm:ss') }">가입일자</div>
+                </div>
+            </div>
+        </section>
+        <!-- 보유 쿠폰 리스트 -->
+        <section class="border-2 relative py-6">
+            <h1 class="text-2xl font-bold m-2 mb-6">보유 쿠폰</h1>
+            <div class="absolute top-6 left-32"><a th:href="@{/admin/coupon/detail(memberId=${member.id})}"
+                    class="btn">상세 내역</a></div>
+            <table class="n-table n-table-style:striped w-full">
+                <thead>
+                    <tr>
+                        <th scope="col">쿠폰명</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">할인율</th>
+                        <th scope="col">유효기간</th>
+                        <th scope="col">최소구매금액</th>
+                    </tr>
+                </thead>
+                <tbody th:with="couponList=${coupons}">
+                    <tr th:if="!${#lists.isEmpty(couponList)}" th:each="coupon: ${coupons}">
+                        <td scope="col" class="text-center" th:text="${coupon.name}">쿠폰명</td>
+                        <td scope="col" class="text-center" th:text="${coupon.description}">내용</td>
+                        <td scope="col" class="text-center" th:text="${coupon.discountRate}">할인율</td>
+                        <td scope="col" class="text-center">
+                            <span th:text="${coupon.validDateStart}">유효기간시작</span>
+                            <span>~</span>
+                            <span th:text="${coupon.validDateEnd}">유효기간끝</span>
+                        </td>
+                        <td scope="col" class="text-center" th:text="${coupon.minimumPurchase}">최소구매금액</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(couponList)}">
+                        <td scope="col" class="text-center"></td>
+                        <td scope="col" class="text-center"></td>
+                        <td scope="col" class="text-center">사용 가능한 쿠폰이 없습니다.</td>
+                        <td scope="col" class="text-center"></td>
+                        <td scope="col" class="text-center"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <!-- 작성 리뷰 -->
+        <section class="border-2">
+            <h1 class="text-2xl font-bold m-2 mb-6">작성한 리뷰</h1>
+            <table class="n-table n-table-style:striped w-5/6 mx-auto">
+                <thead>
+                    <tr>
+                        <th scope="col">주문내용</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">작성일</th>
+                    </tr>
+                </thead>
+                <tbody th:with="reviewList=${reviews}">
+                    <tr th:if="!${#lists.isEmpty(reviewList)}" th:each="review: ${reviewList}">
+                        <td scope="col" class="text-center">주문내용</td>
+                        <td scope="col" class="text-center" th:text="${review.content}">내용</td>
+                        <td scope="col" class="text-center" th:text="${review.regDatetime}">작성일</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(reviewList)}">
+                        <td scope="col" class="text-center"></td>
+                        <td scope="col" class="text-center">작성한 리뷰가 없습니다.</td>
+                        <td scope="col" class="text-center"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <!-- 작성 Q&A -->
+        <section class="border-2">
+            <h1 class="text-2xl font-bold m-2 mb-6">작성한 QnA</h1>
+            <table class="n-table n-table-style:striped w-full">
+                <thead>
+                    <tr>
+                        <th scope="col">주문내용</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">작성일</th>
+                    </tr>
+                </thead>
+                <tbody th:with="qnaList=${qnas}">
+                    <tr th:if="!${#lists.isEmpty(qnaList)}" th:each="qna: ${qnaList}">
+                        <td scope="col" class="text-center">주문내용</td>
+                        <td scope="col" class="text-center" th:text="${qna.content}">내용</td>
+                        <td scope="col" class="text-center" th:text="${qna.regDatetime}">작성일</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(qnaList)}">
+                        <td scope="col" class="text-center"></td>
+                        <td scope="col" class="text-center">작성한 QnA가 없습니다.</td>
+                        <td scope="col" class="text-center"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>

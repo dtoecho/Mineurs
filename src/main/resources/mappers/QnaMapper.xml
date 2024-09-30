@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.QnaRepository">
+    <resultMap id="PostView" type="QnaView">
+        <id column="id" property="id"/>
+        <result property="mainImgPath" column="main_img_path"/>
+        <result property="title" column="title"/>
+        <result property="userName" column="username"/>
+        <result property="regDateTime" column="reg_datetime"/>
+        <result property="views" column="views"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
+    <select id="findAll" resultType="QnaView">
+        select * from qna_list_view
+        <where>
+            <if test="searchKeyword != ''">
+                ${searchMethod} like '%${searchKeyword}%'
+            </if>
+            <if test="categoryId != 0">
+                and category_id = #{categoryId}
+            </if>
+            <if test="dueDate !=0">
+                and reg_datetime >= curdate()-interval #{dueDate} day;
+            </if>
+        </where>
+        order by reg_datetime desc
+    </select>
+
+    <select id="findById" parameterType="Qna">
+        select * from qna where id=#{id}
+    </select>
+
+    <insert id="save" parameterType="Qna">
+        insert into qna(title,content,board_id,qna_category_id,member_id,password)
+        values (#{title},#{content},#{boardId},#{qnaCategoryId},#{memberId},#{password})
+    </insert>
+
+    <select id="findAllByMemberId" parameterType="Qna">
+        SELECT *
+        FROM qna
+        where member_id = #{memberId}
+    </select>
+
+    <update id="update">
+        update qna set views = views+1
+        where id = #{id}
+    </update>
+
+    <select id="findByPassword">
+        SELECT EXISTS(SELECT 1 FROM qna WHERE id = #{id} AND password = #{password});
+    </select>
+
+    <select id="count" resultType="long">
+        select
+        count(id)
+        from qna_list_view
+        <where>
+            <if test="searchKeyword != ''">
+                ${searchMethod} like '%${searchKeyword}%'
+            </if>
+            <if test="categoryId != 0">
+                and category_id = #{categoryId}
+            </if>
+            <if test="dueDate !=0">
+                and reg_datetime >= curdate()-interval #{dueDate} day;
+            </if>
+        </where>
+    </select>
+
+    <update id="edit">
+        update qna
+        set qna_category_id = #{qnaCategoryId}, title = #{title}, content = #{content}
+        <if test="password != null and password !=''">
+        , password = #{password}
+        </if>
+        <if test="answerContent != null and answerContent !=''">
+            , answer_content = #{answerContent}
+            ,state = 1
+        </if>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from qna
+        where id = #{id}
+    </delete>
+</mapper>

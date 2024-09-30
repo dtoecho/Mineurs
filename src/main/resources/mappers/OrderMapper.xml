@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.OrderRepository">
+    <resultMap id="OrderView" type="OrderView">
+        <id column="id" property="id"/>
+        <result property="code" column="code"/>
+        <result property="orderedDatetime" column="ordered_datetime"/>
+        <result property="userName" column="m_name"/>
+        <!-- <result property="productName" column="p_name"/> -->
+        <result property="totalProductPrice" column="total_product_price"/>
+        <result property="totalDiscountAmount" column="total_discount_amount"/>
+        <result property="totalDeliveryFee" column="total_delivery_fee"/>
+        <result property="paymentMethod" column="pm_name"/>
+        <result property="orderState" column="os_name"/>
+        <result property="productsCount" column="p_count"/>
+        <result property="pImgPath" column="p_imgpath"/>
+
+
+
+        <collection property="productNames" ofType="String">
+            <result column="p_name"/>
+        </collection>
+    </resultMap>
+    <select id="findAll" resultMap="OrderView">
+        select
+        *
+        FROM
+        order_list_view
+        <where>
+            <if test="searchKeyword != ''">
+                <if test="searchMethod == 'name'">
+                    p_name like '%${searchKeyword}%'
+                </if>
+                <if test="searchMethod == 'code'">
+                    code like '%${searchKeyword}%'
+                </if>
+
+                <if test="searchMethod == 'userName'">
+                    and m_name LIKE '%${searchKeyword}%'
+                </if>
+            </if>
+            <if test="memberId != null">
+                and member_id LIKE ${memberId}
+            </if>
+            <if test="!calendarStart.isEmpty() and !calendarEnd.isEmpty()">
+                and ordered_datetime between #{calendarStart} and #{calendarEnd}
+            </if>
+        </where>
+        <if test="pageRequest.sort.sorted">
+
+            <foreach item="order" index="i" collection="pageRequest.sort" separator=", ">
+                ORDER BY ${order.property} ${order.direction}
+            </foreach>
+        </if>
+        limit #{pageRequest.offset}, #{pageRequest.pageSize}
+    </select>
+
+
+    <select id="getCount" resultType="int">
+        select
+        count(order_list_view.id) count
+        from order_list_view
+        <where>
+            <if test="searchMethod == 'name'">
+                p_name like '%${searchKeyword}%'
+            </if>
+            <if test="searchMethod == 'userName'">
+                and m_name LIKE '%${searchKeyword}%'
+            </if>
+            <if test="memberId != null">
+                and member_id LIKE '%${memberId}%'
+            </if>
+
+        </where>
+    </select>
+        <select id="findById" resultMap="OrderView">
+            select
+            *
+            from order_list_view where id = #{id}
+        </select>
+
+        <insert id="add" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+            INSERT INTO
+            `order` (total_product_price, member_id)
+            VALUES (#{totalProductPrice}, #{memberId});
+        </insert>
+
+    <select id="findByMemberId" resultMap="OrderView">
+        select
+        *
+        from order_list_view where member_id = #{MemberId}
+    </select>
+
+</mapper>

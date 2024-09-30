@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/inc/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+  <body>
+  <main layout:fragment="main" class="container mx-auto">
+    <section class="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-[3fr_2fr]">
+      <!--     메인이미지       -->
+      <img class="lg:col-start-1" src=""  alt="첨부이미지">
+      <!--     구매 프레임       -->
+      <form method="post" action="user-action"
+            class="w-full px-4 py-4 text-xs text-gray-500 lg:sticky lg:bottom-0 lg:top-20 lg:h-screen lg:overflow-scroll">
+        <!-- userAction에 보내는 productId -->
+        <input type="hidden" name="productId" >
+
+        <!--      이름          -->
+        <p class="text-2xl"></p>
+
+        <!--      설명          -->
+        <p class="text-xs mt-10" ></p>
+
+
+        <!--      가격          -->
+        <section class="mt-10 text-base">
+          <h1>PRICE</h1>
+          <p ></p>
+        </section>
+
+        <!--      색상          -->
+        <section class="mt-10">
+          <h1>COLOR</h1>
+          <div class="mt-2 flex space-x-1">
+            <label
+                   class="relative flex h-10 cursor-pointer items-center justify-center  border border-black px-4 text-xs has-[:checked]:border-4 ${className}">
+
+              <span  class="leading-none"></span>
+              <input type="radio" class="hidden" name="colorId" >
+            </label>
+          </div>
+        </section>
+
+        <!--      사이즈          -->
+        <section class="mt-10">
+          <h1>SIZE</h1>
+          <div class="mt-2 flex space-x-1">
+            <label
+                   class="relative flex h-10 cursor-pointer items-center justify-center  border border-black px-4 text-xs has-[:checked]:border-4 ${className}">
+
+              <span  class="leading-none"></span>
+              <input type="radio" class="hidden" name="sizeId" >
+            </label>
+          </div>
+        </section>
+
+        <!--       선택수량         -->
+        <div class="mt-10 text-gray-900">
+          <span class="font-bold">Total</span>
+          <span class="total-qty font-bold">0</span>개
+          <span class="total-price font-bold">0원</span>
+        </div>
+
+        <div class="clickList mt-10 text-gray-900">
+
+        </div>
+
+        <div class="divider mt-16 border-gray-300"></div>
+
+        <!--       장바구니, 구매 버튼들         -->
+        <div class="mt-4 grid grid-cols-3 gap-1">
+          <!--<a type="button" name="userAction"-->
+          <span class="isLogin hidden" ></span>
+          <button name="userAction" value="1"
+                  class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Buy
+            Now</button>
+          <button name="userAction" value="2"
+                  class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Cart</button>
+          <button name="userAction" value="3"
+                  class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Wish</button>
+        </div>
+      </form>
+
+      <!--     상세이미지       -->
+      <div class="mt-5 w-full space-y-1 md:col-span-2 lg:col-span-1 lg:col-start-1">
+        <img  alt="">
+      </div>
+
+      <!--     연관 상품       -->
+      <!--     정보란       -->
+      <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+        <div class="w-full max-w-6xl mx-auto">
+          <div class="grid grid-cols-3 gap-4">
+            <!-- Review Card Start (Repeat this block for each review) -->
+            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+              <div class="w-full flex mb-4 items-center">
+                <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                  <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+                </div>
+                <div class="flex-grow pl-3">
+                  <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                  <p class="text-xs text-gray-400">2023-03-06</p>
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+              </div>
+            </div>
+            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+              <div class="w-full flex mb-4 items-center">
+                <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                  <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+                </div>
+                <div class="flex-grow pl-3">
+                  <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                  <p class="text-xs text-gray-400">2023-03-06</p>
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+              </div>
+            </div>
+            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+              <div class="w-full flex mb-4 items-center">
+                <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                  <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+                </div>
+                <div class="flex-grow pl-3">
+                  <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                  <p class="text-xs text-gray-400">2023-03-06</p>
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+              </div>
+            </div>
+            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+              <div class="w-full flex mb-4 items-center">
+                <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                  <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+                </div>
+                <div class="flex-grow pl-3">
+                  <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                  <p class="text-xs text-gray-400">2023-03-06</p>
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+              </div>
+            </div>
+            <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+              <div class="w-full flex mb-4 items-center">
+                <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                  <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+                </div>
+                <div class="flex-grow pl-3">
+                  <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                  <p class="text-xs text-gray-400">2023-03-06</p>
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+              </div>
+            </div><div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light">
+            <div class="w-full flex mb-4 items-center">
+              <div class="overflow-hidden rounded-2xl w-24 h-24 bg-gray-50 border border-gray-200">
+                <img src="/src/main/webapp/image/products/스크린샷%202024-03-14%2022.34.39.png" alt="">
+              </div>
+              <div class="flex-grow pl-3">
+                <h6 class="font-bold text-sm uppercase text-gray-600">사용자1</h6>
+                <p class="text-xs text-gray-400">2023-03-06</p>
+              </div>
+            </div>
+            <div class="w-full">
+              <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span> 리뷰 내용 <span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+  </main>
+  </body>
+
+  </html>

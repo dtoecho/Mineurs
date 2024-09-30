@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.CartRepository">
+
+    <select id="findById" resultType="Cart">
+        select * from cart where id=#{id}
+    </select>
+
+    <select id="findByMid" resultType="Cart">
+        select * from cart where member_id=#{mid}
+    </select>
+
+    <select id="findByForeignKeys" resultType="Cart">
+        SELECT
+            *
+        FROM
+            cart
+        WHERE
+            member_id = #{memberId}
+            AND product_item_id = #{productItemId}
+    </select>
+
+    <update id="update" parameterType="cart">
+        UPDATE 
+            cart 
+        SET 
+            member_id=${memberId}
+            ,product_item_id=${productItemId}
+            ,qty = ${qty} 
+        where id = ${id};
+    </update>
+
+    <insert id="add" parameterType="cart">
+        INSERT INTO 
+        cart (member_id, product_item_id, qty) 
+        VALUES (#{memberId}, #{productItemId}, #{qty});
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM cart
+        WHERE id = #{deleteId}
+    </delete>
+
+    <delete id="deleteByMid">
+        DELETE FROM cart
+        WHERE member_id = #{memberId}
+    </delete>
+
+    <update id="increase">
+        UPDATE cart SET qty = qty + 1 WHERE id = #{cartId}
+    </update>
+
+    <update id="decrease">
+        UPDATE cart SET qty = qty - 1 WHERE id = #{cartId}
+    </update>
+</mapper>

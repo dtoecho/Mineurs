@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main layout:fragment="main" class="container mx-auto px-20 mt-20">
+      <section class="w-full">
+        <h1 class="hidden">쿠폰</h1>
+        <div class="text-center font-serif py-3">Coupon</div>
+        <div class="flex justify-between">
+          <p class="font-semibold">마이 쿠폰 목록</p>
+          <p
+            class="text-xs text-gray-500"
+            th:text="@{|사용가능 쿠폰 : ${coupons.size()}장|}"
+          ></p>
+        </div>
+        <div class="pt-3">
+          <table class="border border-slate-800 w-full">
+            <colgroup>
+              <col class="w-11" />
+              <col class="w-64" />
+              <col class="w-auto" />
+              <col class="w-44" />
+              <col class="w-44" />
+            </colgroup>
+            <thead class="font-sans">
+              <th class="border border-slate-800 font-medium text-xs h-10">
+                번호
+              </th>
+              <th class="border border-slate-800 font-medium text-xs h-10">
+                쿠폰명
+              </th>
+              <th class="border border-slate-800 font-medium text-xs h-10">
+                쿠폰 혜택
+              </th>
+              <th class="border border-slate-800 font-medium text-xs h-10">
+                최소 금액
+              </th>
+              <th class="border border-slate-800 font-medium text-xs h-10">
+                사용가능 기간
+              </th>
+            </thead>
+            <tbody class="text-center">
+              <tr
+                th:if="${coupons == null or #lists.isEmpty(coupons)}"
+                class="w-36 h-36"
+              >
+                <td colspan="5" class="text-center text-sm">
+                  보유하고 계신 쿠폰 내역이 없습니다.
+                </td>
+              </tr>
+              <tr th:each="coupon, index  : ${coupons}" class="text-sm">
+                <td
+                  th:text="${index.index + 1}"
+                  class="text-xs font-semibold"
+                ></td>
+                <td th:text="${coupon.name}"></td>
+                <td th:text="${coupon.description}"></td>
+                <td
+                  th:text="${#numbers.formatInteger(coupon.minimumPurchase, 0, 'COMMA')}+ 원"
+                ></td>
+                <td
+                  th:text="@{|${coupon.validDateStart} ~ ${coupon.validDateEnd}|}"
+                ></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-20">
+          <h1 class="font-semibold">쿠폰이용 안내</h1>
+          <div class="border border-slate-800 mt-4">
+            <ul class="list-decimal text-xs my-3">
+              <li class="ml-5">
+                쿠폰은 주문 시 1회에 한해 적용되며, 1회 사용 시 재사용이
+                불가합니다.
+              </li>
+              <li class="ml-5">
+                쿠폰은 적용 가능한 상품이 따로 적용되어 있는 경우 해당 상품 구매
+                시에만 사용이 가능합니다.
+              </li>
+              <li class="ml-5">
+                특정한 종이쿠폰/시리얼쿠폰/모바일쿠폰의 경우 단 1회만 사용이
+                가능할 수 있습니다.
+              </li>
+              <li class="ml-5">
+                기본 배송비 할인쿠폰은 배송구분이 '기본배송'인 상품에 부과된
+                배송비만 할인이 적용됩니다.
+              </li>
+              <li class="ml-5">
+                전체 배송비 할인쿠폰은 배송구분이 '기본배송', '개별배송',
+                '공급사배송'인 상품에 부과된 배송비 할인이 적용됩니다.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/admin/inc/layout}"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<main
+        layout:fragment="main"
+        class="text-xl n-panel n-main-panel d:flex flex-direction:column container mx-auto px-10">
+    
+    <div><a th:href="@{/admin/members/detail(id=${memberId})}" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg mb-5">뒤로가기</a></div>
+    <section class="border-2 relative py-6">
+        <h1 class="text-4xl font-bold m-4 mb-8">쿠폰 상세 내역</h1>
+        <table class="n-table n-table-style:striped w-full">
+            <thead>
+            <tr>
+                <th scope="col">쿠폰명</th>
+                <th scope="col">내용</th>
+                <th scope="col">할인율</th>
+                <th scope="col">유효기간</th>
+                <th scope="col">최소구매금액</th>
+                <th scope="col">사용날짜</th>
+            </tr>
+            </thead>
+            <tbody th:with ="list=${list}">
+                <tr th:if="!${#lists.isEmpty(list)}" th:each="coupon: ${list}">
+                    <td scope="col" class="text-center" th:text="${coupon.name}">쿠폰명</td>
+                    <td scope="col" class="text-center" th:text="${coupon.description}">내용</td>
+                    <td scope="col" class="text-center" th:text="${coupon.discountRate}">할인율</td>
+                    <td scope="col" class="text-center">
+                        <span th:text="${coupon.validDateStart}">유효기간시작</span>
+                        <span>~</span>
+                        <span th:text="${coupon.validDateEnd}">유효기간끝</span>
+                    </td>
+                    <td scope="col" class="text-center" th:text="${coupon.minimumPurchase}">최소구매금액</td>
+                    <td scope="col" class="text-center" th:if="${coupon.used}" 
+                        th:text="${#dates.format(coupon.orderedDatetime, 'yyyy.M.d HH:mm:ss') }">
+                        사용날짜 가져와..</td>
+                    <td scope="col" class="text-center" th:if="${!coupon.used}" >기간 만료</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+   
+</main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/inc/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <script src="/js/findId.js"></script>
+</head>
+<body>
+<main layout:fragment="main">
+    <section class="mt-32 container mx-auto">
+        <h1 class="text-xl text-center">비밀번호 찾기</h1>
+
+        <div class="mt-20 flex flex-row justify-center items-center gap-x-6">
+            <label>
+                이메일로 찾기
+                <input type="radio" id="find-email"  name="findIdRadio" checked class="radio bg-base-300 align-middle ml-2"/>
+            </label>
+            <label>
+                휴대번호로 찾기
+                <input type="radio" id="find-phone" name="findIdRadio" class="radio bg-base-300 align-middle ml-2"/>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-center px-6 mx-auto">
+            <form id="find-email-form" class="w-full max-w-md text-sm" action="/login/find-pw" method="post">
+                <div class="relative flex-col items-center mt-8 w-full">
+                    <label class="">
+                        아이디
+                        <input name="username" class="mt-2 block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                               placeholder="이름을 입력해주세요" maxlength="16" minlength="3" required>
+                        <span id="id-validation" class="block mt-2 text-red-600"></span>
+
+                    </label>
+                </div>
+                <div class="relative flex-col items-center mt-4 w-full">
+                    <label class="">
+                        이름
+                        <input name="name" class="mt-2 block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                               placeholder="이름을 입력해주세요" maxlength="16" minlength="3" required>
+                        <span id="username-validation" class="block mt-2 text-red-600"></span>
+
+                    </label>
+                </div>
+                <div class="relative flex-col items-center mt-4 w-full">
+                    <label>
+                        이메일
+                        <input name="email" class="mt-2 block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                               placeholder="이메일주소를 입력해주세요" required>
+                        <span id="email-validation" class="block mt-2 text-red-600"></span>
+                    </label>
+                </div>
+
+                <button class="mt-10 w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black hover:bg-gray-700 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    제출
+                </button>
+            </form>
+
+            <!--휴대폰 번호로 찾기-->
+            <form id="find-phone-form" class="w-full max-w-md text-sm hidden" action="/login/find-pw" method="post">
+                <div class="relative flex-col items-center mt-8 w-full">
+                    <label class="">
+                        이름
+                        <input name="name" class="mt-2 block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                               placeholder="이름을 입력해주세요" maxlength="16" minlength="3" required>
+                        <span id="name-validation" class="block mt-2 text-red-600"></span>
+
+                    </label>
+                </div>
+                <div class="relative flex-col items-center mt-4 w-full">
+                    <label>
+                        휴대번호
+                        <input name="phoneNumber" class="mt-2 block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                               placeholder="휴대전화번호를 입력해주세요" required>
+                        <span id="phoneNumber-validation" class="block mt-2 text-red-600"></span>
+                    </label>
+                </div>
+
+                <button class="mt-10 w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black hover:bg-gray-700 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    제출
+                </button>
+            </form>
+        </div>
+    </section>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const errorMessage = [[${error}]];
+        /*]]>*/
+    </script>
+</main>
+</body>
+</html>

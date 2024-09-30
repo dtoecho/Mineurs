@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.MemberRepository">
+
+    <select id="findAll" resultType="member">
+		select
+		*
+		from member
+		<where>
+			<if test="searchMethod == 'name'">
+				name like '%${searchKeyword}%'
+			</if>
+			<if test="searchMethod == 'login-id'">
+				and username LIKE '%${searchKeyword}%'
+			</if>
+		</where>
+		order by reg_date desc
+        limit #{offset},#{size}
+	</select>
+
+    <select id="findById" resultType="Member">
+        SELECT
+        *
+        FROM member
+        where id = #{id}
+    </select>
+
+    <select id="findByName" resultType="Member">
+        SELECT
+        *
+        FROM member
+        where name = #{name}
+    </select>
+
+    <select id="findByUsername" resultType="Member">
+        SELECT
+        *
+        FROM member
+        where username = #{username}
+    </select>
+
+    <insert id="save" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO member(name, username, password, phone_number, email)
+        VALUES (#{name}, #{username}, #{password}, #{phoneNumber}, #{email})
+    </insert>
+
+    <update id="update" parameterType="Member">
+        UPDATE member
+        SET
+        username = #{username},
+        name = #{name},
+        phone_number = #{phoneNumber},
+        password = #{password},
+        email = #{email},
+        sms_reception = #{smsReception},
+        email_reception = #{emailReception}
+        where id = #{id}
+    </update>
+
+
+    <delete id="deleteAll" parameterType="list">
+        DELETE FROM member
+        WHERE id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from member
+        where id = #{id}
+    </delete>
+
+    <select id="count" resultType="int">
+		select 
+			count(member.id) count
+		from member
+		<where>
+			<if test="searchMethod == 'name'">
+				name like '%${searchKeyword}%'
+			</if>
+			<if test="searchMethod == 'login-id'">
+				and username LIKE '%${searchKeyword}%'
+			</if>
+		</where>
+	</select>
+
+    <select id="findByEmail">
+        select email from member where email = #{email}
+    </select>
+
+    <update id="updatePoint">
+        UPDATE member
+        SET point = point + #{point}
+        WHERE id = #{memberId};
+    </update>
+
+</mapper>

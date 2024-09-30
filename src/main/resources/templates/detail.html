@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/inc/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="/js/detail.js"></script>
+    <link rel="stylesheet" href="/src/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <main layout:fragment="main" class="container mx-auto">
+        <section class="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-[3fr_2fr]">
+            <!--     메인이미지       -->
+            <img class="lg:col-start-1" src="" th:src="@{|/src/main/webapp/image/products/${product.mainImgPath}|}" alt="첨부이미지">
+            <!--     구매 프레임       -->
+            <form method="post" action="user-action"
+                class="w-full px-4 py-4 text-xs text-gray-500 lg:sticky lg:bottom-0 lg:top-20 lg:h-screen lg:overflow-scroll">
+                <!-- userAction에 보내는 productId -->
+                <input type="hidden" name="productId" th:value="${product.id}">
+
+                <!--      이름          -->
+                <p class="text-2xl" th:text="${product.name}"></p>
+
+                <!--      설명          -->
+                <p class="text-xs mt-10" th:text="${product.description}"></p>
+
+
+                <!--      가격          -->
+                <section class="mt-10 text-base">
+                    <h1>PRICE</h1>
+                    <p th:text="${product.price}"></p>
+                </section>
+
+                <!--      색상          -->
+                <section class="mt-10">
+                    <h1>COLOR</h1>
+                    <div class="mt-2 flex space-x-1">
+                        <label th:each="color: ${colors}"
+                            class="relative flex h-10 cursor-pointer items-center justify-center  border border-black px-4 text-xs has-[:checked]:border-4 ${className}">
+
+                            <span th:text="${color.korName}" class="leading-none"></span>
+                            <input type="radio" class="hidden" name="colorId" th:value="${color.id}">
+                        </label>
+                    </div>
+                </section>
+
+                <!--      사이즈          -->
+                <section class="mt-10">
+                    <h1>SIZE</h1>
+                    <div class="mt-2 flex space-x-1">
+                        <label th:each="size: ${sizes}"
+                            class="relative flex h-10 cursor-pointer items-center justify-center  border border-black px-4 text-xs has-[:checked]:border-4 ${className}">
+
+                            <span th:text="${size.engName}" class="leading-none"></span>
+                            <input type="radio" class="hidden" name="sizeId" th:value="${size.id}">
+                        </label>
+                    </div>
+                </section>
+
+                <!--       선택수량         -->
+                <div class="mt-10 text-gray-900 text-lg">
+                    <span class="font-bold">Total</span>
+                    <span class="total-qty font-bold">0</span>개
+                    <span class="total-price font-bold">0원</span>
+                </div>
+
+                <div class="clickList mt-10 text-gray-900">
+                    
+                </div>
+
+                <div class="divider mt-16 border-gray-300"></div>
+
+                <!--       장바구니, 구매 버튼들         -->
+                <div class="mt-4 grid grid-cols-3 gap-1">
+                    <!--<a type="button" name="userAction"-->
+                    <span class="isLogin hidden" th:text="${memberId}"></span>
+                    <button name="userAction" value="1"
+                        class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Buy
+                        Now</button>
+                    <button name="userAction" value="2"
+                        class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Cart</button>
+                    <button name="userAction" value="3"
+                        class="flex cursor-pointer items-center justify-center border px-1 text-center h-10">Wish</button>
+                </div>
+            </form>
+
+            <!--     상세이미지       -->
+            <div class="mt-5 w-full space-y-1 md:col-span-2 lg:col-span-1 lg:col-start-1">
+                <img th:each="subImg:${subImgs}" th:src="@{|/src/main/webapp/image/subImg/${subImg.path}|}" alt="">
+            </div>
+
+            <!--     연관 상품       -->
+            <!--     정보란       -->
+
+        </section>
+        
+    </main>
+</body>
+
+</html>

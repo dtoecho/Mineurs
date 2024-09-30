@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/inc/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <script src="/js/board/qnaList.js"></script>
+
+</head>
+<body>
+
+    <!-- header -->
+
+    <!-- main -->
+    <main layout:fragment="main" class="container mx-auto mt-24 flex-grow ">
+        <section class="text-center">
+            <h1 class="text-3xl"><a href="/qna">QnA</a></h1>
+            <p><a href="/qna">상품 사용후기입니다.</a></p>
+        </section>
+        <form>
+            <select class="select select-bordered select-sm w-full max-w-64 border mt-12" name="categoryId">
+                <option value="0" selected th:selected="${{param.categoryId}}==0">전체</option>
+                <option value="1" th:selected="${{param.categoryId}}==1">교환 / 반품 문의</option>
+                <option value="2" th:selected="${{param.categoryId}}==2">배송 문의</option>
+                <option value="3" th:selected="${{param.categoryId}}==3">상품 문의</option>
+                <option value="4" th:selected="${{param.categoryId}}==4">배송 전 변경사항 문의</option>
+                <option value="5" th:selected="${{param.categoryId}}==5">입금 / 기타 문의</option>
+            </select>
+            <select class="select select-bordered select-sm w-full max-w-48 border mt-12">
+                <option disabled selected>전체 글보기</option>
+                <option value="">답변전 글보기</option>
+                <option value="">답변완료 글보기</option>
+            </select>
+
+                <table class="table mt-2 mb-4 border-b">
+                    <thead>
+                    <tr class="bg-stone-50">
+                        <th class="text-center text-sm w-16">번호</th>
+                        <th class="text-center text-sm w-32">답변상태</th>
+                        <th class="text-center text-sm w-40">카테고리</th>
+                        <th class="text-center text-sm">제목</th>
+                        <th class="text-center text-sm w-16">작성자</th>
+                        <th class="text-center text-sm w-16">등록날짜</th>
+                        <th class="text-center text-sm w-16">조회수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="qna :${list}">
+                        <th class="text-center text-sm" th:text="${qna.id}">No</th>
+                        <td class="text-center text-sm">
+                            <span th:if="${qna.state == 1}">완료</span>
+                            <span th:unless="${qna.state == 1}">-</span>
+                        </td>
+                        <td class="text-center text-sm" th:text="${qna.categoryName}">카테고리</td>
+                        <td class="text-center"><a href="" th:href="@{/qna/secretForm(id=${qna.id})}" th:text="${qna.title}">내용</a></td>
+                        <td class="text-center text-sm" th:text="${qna.userName}">작성자</td>
+                        <th class="text-center text-sm" th:text="${#dates.format(qna.regDateTime,'yyyy-MM-dd HH:mm:ss')}">날짜</th>
+                        <td class="text-center text-sm" th:text="${qna.views}">조회수</td>
+                    </tr>
+                </table>
+
+                <section class="flex mt-12">
+                    <select class="select select-bordered select-sm w-full max-w-28 border mt-0" name="dueDate">
+                        <option selected value="0">전체</option>
+                        <option value="1" th:selected="${param.dueDate} == 1">일주일</option>
+                        <option value="30" th:selected="${param.dueDate} == 30">한달</option>
+                        <option value="90" th:selected="${param.dueDate} == 90">세달</option>
+                    </select>
+                    <select class="select select-bordered select-sm w-full max-w-28 border mt-0" name="searchMethod">
+                        <option selected value="title" th:selected="${{param.searchMethod}} == 'title'">제목</option>
+                        <option value="content" th:selected="${{param.searchMethod}} == 'content'">내용</option>
+                        <option value="writer" th:selected="${param.searchMethod} == 'title'">작성자</option>
+                        <option value="productName" th:selected="${param.searchMethod} == 'title'">상품명</option>
+                    </select>
+                    <div class="join">
+                        <input type="text" placeholder="내용" class="input input-bordered border input-sm w-full max-w-xs"
+                               name="searchKeyword" th:value="${#strings.trim(param.searchKeyword)}"/>
+                        <button class="btn btn-sm">Search</button>
+                    </div>
+                    <div class="grow flex justify-end">
+                        <a href="" th:href="@{qna/reg}" class="btn btn-wide deco icon:pencil_simple icon-size:4">등록하기</a>
+                    </div>
+                </section>
+        </form>
+    </main>
+</body>
+</html>

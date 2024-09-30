@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/inc/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <script src="/js/board/qnaList.js"></script>
+
+</head>
+<body>
+
+<!-- header -->
+
+<!-- main -->
+<main layout:fragment="main" class="container mx-auto mt-24 flex-grow ">
+    <section class="text-center">
+        <h1 class="text-xl"><a href="/qna">My Board</a></h1>
+    </section>
+    <form>
+        <select class="select select-bordered select-sm w-full max-w-64 border mt-12" name="categoryId">
+            <option value="0" selected >전체</option>
+            <option>-문의유형을 선택후 작성해주세요</option>
+            <option value="1" >교환 / 반품 문의</option>
+            <option value="2" >배송 문의</option>
+            <option value="3" >상품 문의</option>
+            <option value="4" >배송 전 변경사항 문의</option>
+            <option value="5" >입금 / 기타 문의</option>
+        </select>
+        <select class="select select-bordered select-sm w-full max-w-48 border mt-12">
+            <option disabled selected>전체 글보기</option>
+            <option value="">답변전 글보기</option>
+            <option value="">답변완료 글보기</option>
+        </select>
+
+        <table class="table mt-2 mb-4 border-b">
+            <thead>
+            <tr class="bg-stone-50">
+                <th class="text-center text-sm w-16">번호</th>
+                <th class="text-center text-sm w-40">구분</th>
+                <th class="text-center text-sm">내용</th>
+                <th class="text-center text-sm w-16">작성자</th>
+                <th class="text-center text-sm w-16">등록날짜</th>
+                <th class="text-center text-sm w-16">조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="text-center text-sm" >No</th>
+                <td class="text-center text-sm">구분</td>
+                <td class="text-center"><a href="" >내용</a></td>
+                <td class="text-center text-sm" >작성자</td>
+                <th class="text-center text-sm" >날짜</th>
+                <td class="text-center text-sm" >조회수</td>
+            </tr>
+        </table>
+
+        <section class="flex mt-12 justify-center">
+            <select class="select select-bordered select-sm w-full max-w-28 border mt-0" name="dueDate">
+                <option selected value="0">전체</option>
+                <option value="1" >일주일</option>
+                <option value="30" >한달</option>
+                <option value="90" >세달</option>
+            </select>
+            <select class="select select-bordered select-sm w-full max-w-28 border mt-0" name="searchMethod">
+                <option selected value="title" >제목</option>
+                <option value="content" >내용</option>
+                <option value="writer" >작성자</option>
+                <option value="productName" >상품명</option>
+            </select>
+            <div class="join">
+                <input type="text" placeholder="내용" class="input input-bordered border input-sm w-full max-w-xs"
+                       name="searchKeyword"/>
+                <button class="btn btn-sm">Search</button>
+            </div>
+        </section>
+    </form>
+
+<!--    &lt;!&ndash; 페이징 &ndash;&gt;-->
+<!--    <div class="join self-center"-->
+<!--         th:object="${list}"-->
+<!--         th:if="${!list.isEmpty() and list.totalPages gt 1}"-->
+<!--    >-->
+<!--        &lt;!&ndash;   이전버튼     &ndash;&gt;-->
+<!--        <a th:if="*{hasPrevPageGroup()}"-->
+<!--           th:href="@{/(p=*{pageGroupStartNumber} - 1, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId} )}"-->
+<!--           class="join-item btn">«-->
+<!--        </a>-->
+
+<!--        &lt;!&ndash;   숫자버튼     &ndash;&gt;-->
+<!--        <a-->
+<!--                th:each="pageNumber: *{#numbers.sequence(pageGroupStartNumber, pageGroupEndNumber)}"-->
+<!--                th:text="${pageNumber}"-->
+<!--                class="join-item btn"-->
+<!--                th:classappend="(*{number+1} eq ${pageNumber}) ? 'btn-active'"-->
+<!--                th:href="@{/qna(p=${pageNumber}, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId} )}"-->
+
+
+<!--        >1</a>-->
+
+<!--        &lt;!&ndash;    다음버튼    &ndash;&gt;-->
+<!--        <a th:if="*{hasNextPageGroup()}"-->
+<!--           th:href="@{/(p=*{pageGroupEndNumber} + 1, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId})}"-->
+<!--           class="join-item btn">»-->
+<!--        </a>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; 페이징 &ndash;&gt;-->
+</main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" html layout:decorate="~{/admin/inc/layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main layout:fragment="main" class="flex flex-col items-center">
+    <h1 class="font-bold text-3xl">쿠폰 목록</h1>
+    <!--    검색 -->
+    <div class="join">
+        <div>
+            <div>
+                <input class="input input-bordered join-item" placeholder="검색어를 입력하세요"/>
+            </div>
+        </div>
+        <select class="select select-bordered join-item">
+            <option disabled selected>선택</option>
+            <option>제목</option>
+            <option>내용</option>
+            <option>제목+내용</option>
+        </select>
+
+        <button class="btn join-item">Search</button>
+
+    </div>
+
+    <!--    리스트-->
+    <div class="overflow-x-auto w-full">
+        <table class="table table-zebra">
+            <!-- head -->
+            <thead>
+            <tr>
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox"/>
+                    </label>
+                </th>
+                <th>상품명</th>
+                <th>판매가</th>
+                <th>공급가</th>
+                <th>이미지</th>
+                <th>설명</th>
+                <th>등록일자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- row 1 -->
+            <tr>
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox"/>
+                    </label>
+                </th>
+                <td>
+                    바지
+                </td>
+                <td>
+                    3,000
+                </td>
+                <td>5,000</td>
+                <td>사진.jpg</td>
+                <td>어떤 설명</td>
+                <td>2024.01.01</td>
+
+            </tr>
+            <!-- row 2 -->
+            <tr>
+                <th>
+                    <label>
+                        <input type="checkbox" class="checkbox"/>
+                    </label>
+                </th>
+                <td>
+                    바지
+                </td>
+                <td>
+                    3,000
+                </td>
+                <td>5,000</td>
+                <td>사진.jpg</td>
+                <td>어떤 설명</td>
+                <td>2024.01.01</td>
+
+            </tr>
+
+            </tbody>
+
+
+        </table>
+    </div>
+
+</main>
+
+</body>
+</html>

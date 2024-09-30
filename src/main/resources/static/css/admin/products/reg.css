@@ -1,0 +1,45 @@
+.main-img-box ,
+.sub-img-box {
+    img {
+        height: 300px;
+        opacity: 0;
+        transform: translateX(-200px);
+        transition: all 1s;
+    }
+}
+.main-img-box,
+.sub-img-box {
+    img.fade-in {
+        opacity: 1;
+    }
+}
+.main-img-box,
+.sub-img-box {
+    img.slide-in {
+        transform: translateX(0);
+    }
+}
+
+.main-img-label,
+.sub-img-label {
+    background-color: transparent;
+    transition: all 0.4s;
+}
+
+.sub-img-label.valid, .main-img-label.valid {
+    background-color: yellowgreen;
+}
+
+.sub-img-label.valid::after, .main-img-label.valid::after {
+    content: "올바른 파일";
+    display: inline-block;
+}
+
+.sub-img-label.invalid, .main-img-label.invalid {
+    background-color: coral;
+}
+
+.sub-img-label.invalid::after, .main-img-label.invalid::after {
+    content: "파일형식만 해라";
+    display: inline-block;
+}

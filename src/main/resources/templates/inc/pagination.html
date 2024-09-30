@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- 페이징 -->
+<div th:fragment="pagination(pageObject)" class="join self-center"
+     th:object="${pageObject}"
+     th:if="${!pageObject.isEmpty() and pageObject.totalPages gt 1}"
+>
+    <!--   이전버튼     -->
+    <a th:if="*{hasPrevPageGroup()}"
+       th:href="@{''(p=*{pageGroupStartNumber} - 1, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId} )}"
+       class="join-item btn">«
+    </a>
+
+    <!--   숫자버튼     -->
+    <a
+            th:each="pageNumber: *{#numbers.sequence(pageGroupStartNumber, pageGroupEndNumber)}"
+            th:text="${pageNumber}"
+            class="join-item btn"
+            th:classappend="(*{number+1} eq ${pageNumber}) ? 'btn-active'"
+            th:href="@{''(p=${pageNumber}, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId} )}"
+
+
+    >1</a>
+
+    <!--    다음버튼    -->
+    <a th:if="*{hasNextPageGroup()}"
+       th:href="@{''(p=*{pageGroupEndNumber} + 1, s=${param.s}, searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId})}"
+       class="join-item btn">»
+    </a>
+</div>
+<!-- 페이징 -->
+
+<div th:fragment="fg">ddd</div>
+</body>
+</html>

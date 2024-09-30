@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" html layout:decorate="~{/admin/inc/layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main layout:fragment="main" class="flex flex-col">
+    <h1 class="font-bold text-3xl self-center">관리자 상품목록</h1>
+    <!--    검색 -->
+
+    <section class="overflow-x-auto w-full flex flex-col">
+        <table class="table">
+            <colgroup>
+                <col class="bg-base-300"/>
+            </colgroup>
+
+            <tbody>
+            <tr>
+                <td>검색분류</td>
+
+                <td colspan="3">
+                    <div>
+
+                        <!--  검색 모듈 -->
+                        <div class="join">
+                            <select class="select select-bordered join-item">
+                                <option>상품명</option>
+                            </select>
+                            <div>
+                                <div>
+                                    <input class="input input-bordered join-item" placeholder="검색어를 입력하세요"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>상품분류</td>
+                <td colspan="3">
+                    <select class="select select-sm select-bordered">
+                        <option>Outwear</option>
+                        <option>Top</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>상품등록일</td>
+                <td colspan="3">
+                    <div class="flex space-x-5">
+                        <div class="flex space-x-1">
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>오늘</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>3일</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>7일</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>1개월</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>3개월</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>1년</span>
+                                <input type="radio" name="radio-1" class="hidden"/>
+                            </label>
+                            <label class="btn btn-outline btn-sm flex justify-center items-center">
+                                <span>전체</span>
+                                <input type="radio" name="radio-1" class="hidden" checked/>
+                            </label>
+                        </div>
+
+                        <div class="flex space-x-1 items-center">
+                            <input type="date" name="startDate">
+                            <span>~</span>
+                            <input type="date" name="endDate">
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>진열상태</td>
+                <td>
+                    <div class="form-control flex flex-row space-x-2">
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" checked />
+                            <span class="label-text">전체</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" />
+                            <span class="label-text">진열함</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" />
+                            <span class="label-text">진열안함</span>
+                        </label>
+                    </div>
+                </td>
+                <td class="bg-base-300">판매상태</td>
+                <td >
+                    <div class="form-control flex flex-row space-x-2">
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" checked />
+                            <span class="label-text">전체</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" />
+                            <span class="label-text">판매함</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input type="radio" name="radio-10" class="radio" />
+                            <span class="label-text">판매안함</span>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="self-center flex space-x-2">
+            <button class="btn btn-wide">검색</button>
+            <button class="btn btn-wide btn-outline">초기화</button>
+        </div>
+    </section>
+
+
+    <!--    리스트-->
+    <section class="mt-10">
+        <h1 class="text-2xl mb-0">상품 목록</h1>
+        <div class="overflow-x-auto w-full">
+            <table class="table table-zebra text-center">
+                <!-- head -->
+                <thead>
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </th>
+
+                    <th>No</th>
+                    <th>상품코드</th>
+                    <th>상품명</th>
+                    <th>판매가</th>
+                    <th>이미지</th>
+                    <th>설명</th>
+                    <th>진열함</th>
+                    <th>판매함</th>
+                    <th>등록일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- row 1 -->
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </th>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        P000000N
+                    </td>
+                    <td class="text-left">
+                        바지
+                    </td>
+                    <td class="text-right">
+                        3,000
+                    </td>
+                    <td>사진.jpg</td>
+                    <td>어떤 설명</td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </td>
+                    <td>2024.01.01</td>
+
+                </tr>
+                <!-- row 2 -->
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </th>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        P000000N
+                    </td>
+                    <td class="text-left">
+                        바지
+                    </td>
+                    <td class="text-right">
+                        3,000
+                    </td>
+                    <td>사진.jpg</td>
+                    <td>어떤 설명</td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="checkbox"/>
+                        </label>
+                    </td>
+
+                    <td>2024.01.01</td>
+
+                </tr>
+
+                </tbody>
+
+
+            </table>
+        </div>
+        <div class="flex justify-between">
+            <div class="flex space-x-1">
+                <button class="btn btn-outline btn-sm">진열함</button>
+                <button class="btn btn-outline btn-sm">진열안함</button>
+                <button class="btn btn-outline btn-sm">판매함</button>
+                <button class="btn btn-outline btn-sm">판매안함</button>
+                <button class="btn btn-outline btn-sm">삭제</button>
+            </div>
+            <div class="flex justify-end">
+                <button class="btn">
+                    상품등록
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="join self-center flex space-x-4">
+        <div>
+            <button class="join-item btn">1</button>
+            <button class="join-item btn btn-active">2</button>
+            <button class="join-item btn">3</button>
+            <button class="join-item btn">4</button>
+        </div>
+        <div>
+            <button class="btn bg-primary-content ">다음</button>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

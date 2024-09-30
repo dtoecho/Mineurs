@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/admin/inc/layout}"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script type="module" src="/js/admin/products/edit.js"></script>
+</head>
+<body>
+<main layout:fragment="main" class="flex flex-col container mx-auto px-10">
+
+    <h1>상품 등록</h1>
+    <form
+            id="form"
+            method="post"
+            th:action="@{/admin/products/{id}/edit(id=${product.id})}"
+            class="n-form n-form-type:outline-box px:10 w:100p"
+            enctype="multipart/form-data"
+            th:object="${product}"
+    >
+
+        <table class="table">
+            <colgroup>
+                <col class="bg-base-200"/>
+            </colgroup>
+
+            <tbody>
+            <tr>
+                <td>
+                    <span>상품 이름</span>
+                </td>
+
+                <td colspan="3">
+                    <label>
+                        <input
+                                th:field="*{name}"
+                                type="text"
+                                required
+                                class="block w-3/5"
+                        />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>판매가</span>
+                </td>
+
+                <td colspan="3">
+                    <label>
+                        <input
+                                th:field="*{price}"
+                                type="number"
+                                required
+                                class="block w-3/5"
+                        />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>상품설명</span>
+                </td>
+
+                <td colspan="3">
+                    <label class="block w-3/5">
+                  <textarea
+                          th:field="*{description}"
+                          required
+                          class="h-36 w-full"
+                  ></textarea>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td> 대표 사진</td>
+                <td colspan="3">
+                    <!--         이미지 업로더           -->
+                    <div class="img-uploader single-img-uploader w-fit flex">
+                        <label>
+                            <input class="hidden img-input"
+                                   type="file"
+                                   th:value="${product.mainImgPath}"
+                                   name="updateImg"
+                            />
+                            <!--          이미지 미리보기            -->
+                            <span class="img-preview flex">
+                                <span class="img-frame flex relative w-44 h-44">
+                                    <button class="btn btn-primary absolute top-0 right-0 img-del-btn">X</button>
+                                    <img
+                                            th:src="@{'/webapp/image/products/'+${product.mainImgPath}}"
+                                            alt="첨부이미지"
+                                            class="my-0"
+                                            th:data-isOldImg="${true}"
+                                    >
+                                </span>
+
+                            </span>
+                        </label>
+                    </div>
+
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>추가 사진</td>
+                <td colspan="3">
+
+                    <!--         이미지 업로더           -->
+                    <div class="img-uploader multi-img-uploader w-fit flex">
+
+                        <!--          이미지 미리보기            -->
+                        <span class="img-preview flex w-fit">
+                            <span class="img-frame flex relative w-44 h-44" th:each="subimg : ${subImgs}">
+                                <button class="btn btn-primary absolute top-0 right-0 img-del-btn">X</button>
+                                <img
+                                        th:src="@{'/webapp/image/subImg/'+${subimg.path}}"
+                                        alt="첨부이미지"
+                                        class="my-0"
+                                        th:data-isOldImg="${true}"
+                                >
+                            </span>
+                        </span>
+                        <label class="flex justify-center items-center w-44 h-44 bg-base-200">
+                            <span th:class="text-2xl">+</span>
+                            <input class="hidden img-input"
+                                   type="file"
+                                   name="updateSubImgs"
+                                   multiple
+                            >
+                        </label>
+                    </div>
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>카테고리</td>
+                <td colspan="3">
+                    <label>
+                        <select name="categoryId" th:value="${product.categoryId}" class="n-dropdown">
+                            <option
+                                    th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    value="javascript"
+                                    class="n-dropdown-item"
+                                    th:text="${category.name}"
+                                    th:selected="${product.categoryId == category.id}"
+                            >
+                            </option>
+                        </select>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>진열상태</td>
+                <td>
+                    <div class="form-control flex flex-row space-x-2">
+
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="displayed" value="1" type="radio" class="radio"
+                                   th:value="${product.displayed}"
+                                   th:checked="${product.displayed}"/>
+                            <span class="label-text">진열함</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="displayed" value="0" type="radio" class="radio"
+                                   th:value="${product.displayed}"
+                                   th:checked="${!product.displayed}"/>
+                            <span class="label-text">진열안함</span>
+                        </label>
+                    </div>
+                </td>
+                <td class="bg-base-200">판매상태</td>
+                <td>
+                    <div class="form-control flex flex-row space-x-2">
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="sold" th:value="${product.sold}" value="1" type="radio" class="radio"
+                                   th:checked="${product.sold}"/>
+                            <span class="label-text">판매함</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="sold" th:value="${product.sold}" value="0" type="radio" class="radio"
+                                   th:checked="${!product.sold}"/>
+                            <span class="label-text">판매안함</span>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>상품코드</td>
+                <td colspan="3">
+                    <label>
+                        <input th:field="*{code}" name="code" type="text" class="block w-3/5">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>당일배송</td>
+                <td colspan="3">
+                    <div class="form-control flex flex-row space-x-2">
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="deliveryToday" value="1" type="radio" class="radio"
+                                   th:value="${product.deliveryToday}"
+                                   th:checked="${product.deliveryToday}"/>
+                            <span class="label-text">당일배송함</span>
+                        </label>
+                        <label class="label cursor-pointer space-x-1">
+                            <input name="deliveryToday" value="0" type="radio" class="radio"
+                                   th:value="${product.deliveryToday}"
+                                   th:checked="${!product.deliveryToday}"/>
+                            <span class="label-text">당일배송안함</span>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>할인율</td>
+                <td colspan="3">
+                    <label>
+                        <input th:field="*{discountRate}" name="discountRate" type="number" step="0.01"
+                               class="block w-3/5">
+                    </label>
+                </td>
+            </tr>
+            
+            <tr th:each="productQty : ${productQtyList}">
+                <td>
+                    <span class="font-bold">재고</span>
+                    <br>
+                    컬러: <span th:text="${productQty.color}"></span>
+                    <br>
+                    사이즈: <span th:text="${productQty.size}"></span>
+                </td>
+                <td colspan="3">
+                    <span th:text="${productQty.qty}"></span> 개
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="flex justify-center space-x-2">
+            <button class="btn btn-wide edit">수정 하기</button>
+            <a href="/admin/products" class="btn btn-wide btn-outline">취소</a>
+        </div>
+    </form>
+
+</main>
+</body>
+</html>

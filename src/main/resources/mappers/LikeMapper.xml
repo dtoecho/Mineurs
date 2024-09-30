@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.LikeRepository">
+
+    <select id="findByForeignKeys" resultType="Like">
+        SELECT
+            *
+        FROM
+            `like`
+        WHERE
+            member_id = #{memberId}
+            AND product_id = #{productId}
+    </select>
+
+    <insert id="add" parameterType="Like">
+        INSERT INTO 
+        `like` (member_id, product_id) 
+        VALUES (#{memberId}, #{productId});
+    </insert>
+
+    <delete id="delete">
+        delete from `like` where member_id = #{memberId} and product_id = #{productId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.admin.PostRepository">
+    <!--리스트 -->
+    <resultMap id="PostView" type="PostView">
+        <id column="postId" property="post_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="boardName" column="board_name"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="state" column="state"/>
+        <result property="memberName" column="member_name"/>
+        <result property="memberId" column="member_id"/>
+        <result property="regDateTime" column="reg_datetime"/>
+        <result property="id" column="id"/>
+    </resultMap>
+
+    <!--게시글 전체 목록 -->
+    <select id="findAll" resultMap="PostView">
+        select * from post_list_view
+
+<!--        <where>-->
+<!--            <if test="searchMethod != null and searchMethod == 'summary' and searchKeyword != null and searchKeyword != '' ">-->
+<!--                AND summary like '%${searchKeyword}%'-->
+<!--            </if>-->
+<!--            <if test="searchMethod != null and searchMethod == 'content' and searchKeyword != null and searchKeyword != ''">-->
+<!--                AND content like '%${searchKeyword}%'-->
+<!--            </if>-->
+<!--            <if test="boardId != null and boardId != 0">-->
+<!--                AND board_id = #{boardId}-->
+<!--            </if>-->
+<!--        </where>-->
+        <where>
+            <if test="searchMethod == 'summary'">
+                summary like '%${searchKeyword}%'
+            </if>
+            <if test="searchMethod == 'content'">
+                content like '%${searchKeyword}%'
+            </if>
+            <if test="boardId != 0">
+                and board_id = #{boardId}
+            </if>
+        </where>
+    </select>
+
+    <!--게시글 전체 갯수 -->
+    <select id="count" resultType="int">
+        select
+            count(post_id)
+        from
+            post_list_view;
+<!--        <where>-->
+<!--            <if test="searchMethod == 'summary'">-->
+<!--                summary like '%${searchKeyword}%'-->
+<!--            </if>-->
+<!--            <if test="searchMethod == 'content'">-->
+<!--                content like '%${searchKeyword}%'-->
+<!--            </if>-->
+<!--            <if test="boardName == 'NOTICE'">-->
+<!--                and board_name = #{boardName}-->
+<!--            </if>-->
+<!--            <if test="boardName == 'QnA'">-->
+<!--                and board_name = #{categoryId}-->
+<!--            </if>-->
+<!--            <if test="boardName == 'REVIEW'">-->
+<!--                and board_name = #{categoryId}-->
+<!--            </if>-->
+<!--        </where>-->
+    </select>
+</mapper>

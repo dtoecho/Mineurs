@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="" th:href="@{/css/output.css}" />
+    <script src="/js/input.js"></script>
+</head>
+<body>
+<!--    header 부분-->
+<div th:replace="~{/board/notice/inc/header}"></div>
+
+<!--    aside 부분-->
+<div th:replace="~{/board/notice/inc/aside}"></div>
+
+
+<!--main 부분    -->
+<div layout:fragment="main"></div>
+</body>
+</html>

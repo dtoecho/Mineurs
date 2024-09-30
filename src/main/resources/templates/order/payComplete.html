@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css" />
+    <script src="/js/input.js"></script>
+  </head>
+  <body class="bg-white">
+    <!--main-->
+    <main layout:fragment="main" class="container mx-auto mt-32">
+      <section class="py-10 px-8 flex flex-col">
+
+        <h1 class="text-center text-6xl border-y py-10">주문 완료</h1>
+        <div class="mx-auto"><a href="/" class="btn mt-16 mx-auto text-2xl w-32">돌아가기</a></div>
+      </section>
+    </main>
+  </body>
+</html>

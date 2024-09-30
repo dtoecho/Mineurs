@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        html
+        layout:decorate="~{/admin/inc/layout}"
+        xmlns:layout="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script type="module" src="https://unpkg.com/vanilla-colorful?module"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/admin/option/list-vue.js"></script>
+
+</head>
+<body>
+<main layout:fragment="main" class="flex flex-col container mx-auto px-10">
+    <h1 class="font-bold text-3xl self-center">상품 옵션 목록</h1>
+
+    <!--    리스트-->
+    <section class="mt-10">
+        <form th:action="@{/admin/options/del-colors}" method="post">
+            <h1 class="text-2xl mb-0">색상 목록</h1>
+            <div class="overflow-x-auto w-full">
+                <table class="table table-zebra text-center">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">국문명</th>
+                        <th scope="col">영문명</th>
+                        <th scope="col">색상</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="color: ${colors}">
+                        <td>
+                            <input
+                                    name="colorIds"
+                                    type="checkbox"
+                                    class="checkbox"
+                                    th:value="${color.id}"
+                            />
+                        </td>
+                        <td th:text="${color.korName}">국문명</td>
+                        <td th:text="${color.engName}">영문명</td>
+                        <td>
+                            <div class="flex justify-center items-center space-x-4">
+                                <span th:text="${color.hexCode}"></span>
+                                <div class="w-4 h-4" th:style="'background-color:' + ${color.hexCode}"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button form="add-color" class="btn btn-secondary">+</button>
+                        </td>
+                        <td><input class="border-b" pattern="[가-힣]*" maxlength="10" title="한글 10자 이내로 입력하세요"
+                                   form="add-color" type="text" name="korName" v-model="newColor.korName"></td>
+                        <td><input class="border-b" pattern="[a-zA-Z]*" maxlength="20" title="영문 20자 이내로 입력하세요"
+                                   form="add-color" type="text" name="engName" v-model="newColor.engName"></td>
+                        <td>
+                            <div class="flex justify-center">
+                                <input
+                                        form="add-color" type="text"
+                                        name="hexCode" readonly v-model="newColor.hexCode"
+                                        onclick="my_modal_2.showModal()"
+                                        class="border-b w-16"
+                                >
+                                <div class="ml-2 w-4 h-4" :style="{ backgroundColor: newColor.hexCode }"></div>
+
+                                <!-- Open the modal using ID.showModal() method -->
+                                <dialog id="my_modal_2" ref="my_modal_2" class="modal backdrop:bg-transparent">
+                                    <div class="modal-box  z-50 w-fit h-fit">
+                                        <hex-color-picker color="#1e88e5"></hex-color-picker>
+                                    </div>
+                                    <form method="dialog" class="modal-backdrop ">
+                                        <button class="z-40 w-full h-full" @click.prevent="closeModal"></button>
+                                    </form>
+                                </dialog>
+
+
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex">
+                <div class="flex space-x-1">
+                    <button type="submit" class="btn btn-outline btn-sm">삭제</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <form action="/admin/options/add-color" method="post" id="add-color"></form>
+
+    <!--    리스트-->
+    <section class="mt-10">
+        <form th:action="@{/admin/options/del-sizes}" method="post">
+            <h1 class="text-2xl mb-0">사이즈 목록</h1>
+            <div class="overflow-x-auto w-full">
+                <table class="table table-zebra text-center">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">영문명</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="size: ${sizes}">
+                        <td>
+                            <input
+                                    name="sizeIds"
+                                    type="checkbox"
+                                    class="checkbox"
+                                    th:value="${size.id}"
+                            />
+                        </td>
+                        <td th:text="${size.engName}">영문명</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button form="add-size" class="btn btn-secondary">+</button>
+                        </td>
+                        <td><input class="border-b" pattern="[a-zA-Z]*" maxlength="10" title="영문 10자 이내로 입력하세요"
+                                   form="add-size" name="engName" type="text" v-model="newSize.engName"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex">
+                <div class="flex space-x-1">
+                    <button type="submit" class="btn btn-outline btn-sm">삭제</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <form action="/admin/options/add-size" method="post" id="add-size"></form>
+
+</main>
+</body>
+</html>

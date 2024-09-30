@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/inc/layout}">
+
+<head>
+    <title>Board</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/admin/post/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/admin/post/list.js"></script>
+</head>
+<body class="h-full w-full">
+    <main layout:fragment="main" class="flex flex-col container mx-auto px-10">
+        <h1 class="font-bold text-3xl self-center mt-10"><a href="/admin/post">관리자 게시글목록</a></h1>
+        <section class="overflow-x-auto w-full flex flex-col">
+            <h1 class="text-2xl mb-0">게시물 관리</h1>
+            <div role="tablist" class="tabs tabs-boxed">
+                <a role="tab" class="tab tab-active">전체 게시물 보기</a>
+                <a role="tab" class="tab">전체 댓글 보기</a>
+            </div>
+            <form
+                    method="get"
+                    action="/admin/post"
+                    class="n-form md:n-field-label-position:left border:0 w:3/5 mx:auto my:10"
+            >
+
+                <table class="table">
+                    <colgroup>
+                        <col class="bg-base-300" />
+                    </colgroup>
+
+                    <tbody>
+                    <tr>
+                        <td>검색분류</td>
+
+                        <td colspan="3">
+                            <div>
+                                <!--  검색 모듈 -->
+                                <div class="join">
+                                    <select
+                                            class="select select-bordered join-item"
+                                            name="searchMethod"
+                                    >
+                                        <option
+                                                th:selected="${param.searchMethod} == 'title'"
+                                                value="title"
+                                        >
+                                            제목
+                                        </option>
+                                        <option
+                                                th:selected="${{param.searchMethod}} == 'content'"
+                                                value="content"
+                                        >
+                                            내용
+                                        </option>
+                                    </select>
+                                    <div>
+                                        <div>
+                                            <input
+                                                    type="text"
+                                                    name="searchKeyword"
+                                                    th:value="${#strings.trim(param.searchKeyword)}"
+                                                    class="input input-bordered join-item"
+                                                    placeholder="검색어를 입력하세요"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>게시판 선택</td>
+                        <td colspan="">
+                            <select class="select select-sm select-bordered" name="boardId" th:checked="${param.boardId}">
+                                <option value="0">전체목록</option>
+                                <option th:each="post : ${list}"
+                                        th:value="${post.boardId}"
+                                        th:text="${post.boardName}"
+                                        ></option>
+                            </select>
+                            <select class="select select-sm select-bordered" name="qnaCategory">
+                                <option value="0">카테고리 전체</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        ></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>작성일</td>
+                        <td colspan="3">
+                            <div class="flex space-x-5">
+                                <div class="flex space-x-1 items-center">
+                                    <input class="before-date-input" type="date"/>
+                                    <span>~</span>
+                                    <input class="after-date-input" type="date"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>답변상태</td>
+                        <td>
+                            <div class="form-control flex flex-row space-x-2">
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio" class="radio" name="responseStatus"/>
+                                    <span class="label-text">전체</span>
+                                </label>
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio" class="radio" name="responseStatus"/>
+                                    <span class="label-text">답변 전</span>
+                                </label>
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio" class="radio"  name="responseStatus"/>
+                                    <span class="label-text">답변 완료</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="bg-base-300">댓글여부</td>
+                        <td>
+                            <div class="form-control flex flex-row space-x-2">
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio"  class="radio" checked />
+                                    <span class="label-text">전체</span>
+                                </label>
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio"  class="radio" />
+                                    <span class="label-text">있음</span>
+                                </label>
+                                <label class="label cursor-pointer space-x-1">
+                                    <input type="radio"  class="radio" />
+                                    <span class="label-text">없음</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="self-center flex space-x-2">
+                    <button class="btn btn-wide">검색</button>
+                    <button type="reset" class="btn btn-wide btn-outline">초기화</button>
+                </div>
+            </form>
+        </section>
+
+        <!--게시글 리스트-->
+        <section class="mt-10">
+            <h1 class="text-2xl mb-0">게시글 목록</h1>
+            <div class="overflow-x-auto w-full">
+                <table class="table table-zebra text-center">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w:2"></th>
+                        <th scope="col">ID</th>
+                        <th scope="col">분류</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">답변상태</th>
+                        <th scope="col">내용보기</th>
+
+                        <th scope="col">작성자</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="post :${list}">
+                        <td scope="col">
+                            <input
+                                    name="deleteId"
+                                    type="checkbox"
+                                    class="checkbox"
+                            />
+                        </td>
+                        <td scope="row" th:text="${post.id}">1</td>
+                        <td th:text="${post.boardName}">Q&A</td>
+                        <td th:text="${post.title}">제목</td>
+                        <td th:text="${post.state == 1 ? '답변완료' : '-'}">답변완료</td>
+                        <td>
+<!--                            <button id="modal-btn" type="button" class="preview n-btn" th:data-id="${post.id}">-->
+<!--                            미리보기-->
+<!--                            </button>-->
+                            <a class="btn" th:if="${post.boardName} == 'QnA'" th:href="@{/qna/{id}(id=${post.id})}">이동</a>
+                            <a class="btn" th:if="${post.boardName} == 'NOTICE'" th:href="@{/notices/{id}(id=${post.id})}">이동</a>
+                        </td>
+                        <td th:text="${post.memberName}">작성자</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="flex justify-between">
+            <div class="flex space-x-1">
+                <button class="btn btn-outline btn-sm">공지글 등록</button>
+                <button class="btn btn-outline btn-sm">공지 해제</button>
+                <button class="btn btn-outline btn-sm">삭제</button>
+            </div>
+        </div>
+
+        <!-- 페이저  -->
+<!--        <section class="mb:5">-->
+<!--            <h1 class="d:none">페이저</h1>-->
+<!--            <ul-->
+<!--                    class="join self-center flex space-x-4"-->
+<!--                    style="display: flex; justify-content: center"-->
+<!--                    th:with="page = (${param.page} == null) ? 1 : ${{param.page}}-->
+<!--            , floatnum=(${page}-1)/5,-->
+<!--            intnum=${T(java.lang.Math).floor(floatnum)},-->
+<!--            startnum=${intnum}*5+1,-->
+<!--            lastnum = ${count} mod 10 > 0 ? ${count / 10} + 1 : ${count / 10} + 0"-->
+<!--            >-->
+<!--                <li>-->
+<!--                    <a-->
+<!--                            th:if="${page} ge 6 and ${param.searchKeyword} != null"-->
+<!--                            href="products?p=1"-->
+<!--                            th:href="@{./products(page=${startnum}-1,searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId})}"-->
+<!--                    >이전</a-->
+<!--                    >-->
+<!--                    <a-->
+<!--                            th:if="${page} ge 6 and ${param.searchKeyword} == null"-->
+<!--                            href="products?p=1"-->
+<!--                            th:href="@{./products(page=${startnum}-1),categoryId=${param.categoryId}}"-->
+<!--                    >이전</a-->
+<!--                    >-->
+<!--                </li>-->
+
+<!--                <li-->
+<!--                        th:each="n : ${#numbers.sequence(startnum,startnum+4)}"-->
+<!--                        th:class="${{page}} eq ${n}? 'active'"-->
+<!--                >-->
+<!--                    <a-->
+<!--                            class="join-item btn"-->
+<!--                            th:if="${n le lastnum and param.searchKeyword != null}"-->
+<!--                            href="products?p=1"-->
+<!--                            th:href="@{./products(page=${n},searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId})}"-->
+<!--                            th:text="${n}"-->
+<!--                    >1</a-->
+<!--                    >-->
+<!--                    <a-->
+<!--                            class="join-item btn"-->
+<!--                            th:if="${n le lastnum and param.searchKeyword == null}"-->
+<!--                            href="products?p=1"-->
+<!--                            th:href="@{./products(page=${n},categoryId=${param.categoryId})}"-->
+<!--                            th:text="${n}"-->
+<!--                    >1</a-->
+<!--                    >-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a-->
+<!--                            class="join-item btn"-->
+<!--                            th:if="${startnum+5 le lastnum and param.searchKeyword != null}"-->
+<!--                            href="products?p=12"-->
+<!--                            th:href="@{./products(page=${startnum}+5,searchMethod=${param.searchMethod},searchKeyword=${param.searchKeyword},categoryId=${param.categoryId})}"-->
+<!--                    >다음</a-->
+<!--                    >-->
+<!--                    <a-->
+<!--                            class="join-item btn"-->
+<!--                            th:if="${startnum+5 le lastnum and param.searchKeyword == null}"-->
+<!--                            href="products?p=12"-->
+<!--                            th:href="@{./products(page=${startnum}+5),categoryId=${param.categoryId}}"-->
+<!--                    >다음</a-->
+<!--                    >-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </section>-->
+        <!-- 모달 -->
+        <section class="modal" tabindex="-1">
+            <h1 class="n-font:h3 font-weight:3">모달 예시</h1>
+
+            <div class="mt:8 text-a:center">Hello World</div>
+
+            <div class="d:flex fl-direction:column gap:2 mt:8">
+                <button type="button" class="n-btn n-btn-size:3">확인</button>
+                <button type="button" class="n-btn n-btn:void n-btn-size:3">닫기</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

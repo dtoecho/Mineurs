@@ -1,0 +1,30 @@
+/*
+ì›¹í°íŠ¸
+https://github.com/orioncactus/pretendard
+*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css");
+
+@import url("root.css");
+@import url("icon.css");
+@import url("./util/font.css");
+@import url("./components/container.css");
+@import url("./components/font.css");
+@import url("./components/menu.css");
+@import url("./components/backdrop.css");
+@import url("./components/modal.css");
+
+body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-1);
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+#app {
+    height: 100%;
+}

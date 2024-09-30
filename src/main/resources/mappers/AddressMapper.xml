@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.AddressRepository">
+
+    <insert id="saveByMemberId" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        insert into delivery_info
+        (receiver_name, phone_number, name, post_code, address,
+        extra_address, detail_address, is_default, member_id)
+        values
+        (#{address.receiverName}, #{address.phoneNumber}, #{address.name}, #{address.postCode},
+        #{address.address}, #{address.extraAddress}, #{address.detailAddress}, #{address.isDefault},
+        #{memberId})
+    </insert>
+
+    <select id="findAllByMemberId" resultType="Address" parameterType="Long">
+        select * from delivery_info where member_id = #{memberId}
+    </select>
+
+    <select id="findById" resultType="Address">
+        select * from delivery_info where member_id = #{memberId} and id = #{id}
+    </select>
+
+    <update id="update" parameterType="Address" >
+        UPDATE delivery_info
+        SET
+        receiver_name = #{receiverName},
+        phone_number = #{phoneNumber},
+        name = #{name},
+        post_code = #{postCode},
+        address = #{address},
+        extra_address = #{extraAddress},
+        detail_address = #{detailAddress},
+        is_default = #{isDefault}
+        where id = #{id}
+
+    </update>
+    <delete id="delete">
+        delete from delivery_info where member_id = #{memberId} and id = #{addressId}
+    </delete>
+
+</mapper>

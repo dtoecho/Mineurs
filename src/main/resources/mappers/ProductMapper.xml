@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.ProductRepository">
+    <resultMap id="ProductView" type="ProductView">
+        <id column="id" property="id"/>
+        <result property="name" column="name"/>
+        <result property="mainImgPath" column="main_img_path"/>
+        <result property="isSold" column="is_sold"/>
+        <result property="isDisplayed" column="is_displayed"/>
+        <result property="price" column="price"/>
+        <result property="discountRate" column="discount_rate"/>
+        <result property="isDeliveryToday" column="is_delivery_today"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="currentUserLiked" column="current_user_liked"/>
+
+        <collection property="colors" ofType="Color">
+            <id property="id" column="c_id"/>
+            <result property="korName" column="c_kor_name"/>
+            <result property="engName" column="c_eng_name"/>
+            <result property="hexCode" column="c_hex_code"/>
+
+        </collection>
+        <collection property="sizes" ofType="Size">
+            <id property="id" column="s_id"/>
+            <id property="engName" column="s_eng_name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="MappingBoolean" type="Product">
+        <result property="displayed" column="is_displayed" javaType="boolean" jdbcType="BOOLEAN"/>
+        <result property="sold" column="is_sold" javaType="boolean" jdbcType="BOOLEAN"/>
+        <result property="deliveryToday" column="is_delivery_today" javaType="boolean" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="ProductView">
+        SELECT
+        plv.*,
+        nvl(l.member_id IS NOT NULL, 0) current_user_liked
+
+        FROM (
+        select
+        p.*,
+
+        ct.id ct_id,
+        ct.name ct_name,
+
+        pi.id pi_id,
+        pi.qty pi_qty,
+        pi.`code` pi_code,
+        pi.product_id pi_product_id,
+        pi.size_id pi_size_id,
+        pi.color_id pi_color_id,
+
+        s.id s_id,
+        s.eng_name s_eng_name,
+
+        c.id c_id,
+        c.kor_name c_kor_name,
+        c.eng_name c_eng_name,
+        c.hex_code c_hex_code
+
+        from (select p.*, count(l.member_id) like_count from product p
+        left join `like` l on l.product_id = p.id
+        group by p.id
+
+        <if test="pageRequest.sort.sorted">
+            <foreach item="order" index="i" collection="pageRequest.sort" separator=", ">
+                ORDER BY ${order.property} ${order.direction}
+            </foreach>
+        </if>
+
+        limit #{pageRequest.offset}, #{pageRequest.pageSize}
+        ) p
+        left join category ct on ct.id = p.category_id
+        left join product_item pi on pi.product_id = p.id
+        left join size s on s.id = pi.size_id
+        left join color c on c.id = pi.color_id
+        ) plv
+
+        left join `like` l on l.member_id = #{memberId} and l.product_id = plv.id
+
+        <where>
+            <if test="!searchKeyword.isEmpty()">
+                plv.${searchMethod} like '%${searchKeyword}%'
+            </if>
+            <if test="categoryId != 0">
+                and plv.ct_id = #{categoryId}
+            </if>
+            <if test="!calendarStart.isEmpty() and !calendarEnd.isEmpty()">
+                and reg_date between #{calendarStart} and #{calendarEnd}
+            </if>
+            <if test="displayStatusResult == 1 or displayStatusResult == 0">
+                and is_displayed = #{displayStatusResult}
+            </if>
+            <if test="sellStatusResult == 1 or sellStatusResult == 0">
+                and is_sold = #{sellStatusResult}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findAllByMemberId" resultMap="ProductView">
+        SELECT
+        plv.*
+
+        FROM mineurs_db.product_list_view plv
+        left join `like` l on l.member_id = #{memberId} and l.product_id = plv.id
+
+        <where>
+            member_id = l.member_id
+        </where>
+        GROUP BY id
+
+        limit #{pageRequest.offset}, #{pageRequest.pageSize}
+    </select>
+
+
+    <select id="findById" resultType="Product" resultMap="MappingBoolean">
+        SELECT
+        *
+        FROM product
+        where id = #{id}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select
+        count(id)
+        from product
+        <where>
+            <if test="searchKeyword != ''">
+                ${searchMethod} like '%${searchKeyword}%'
+            </if>
+            <if test="categoryId != 0">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCountByMemberId" resultType="long">
+        SELECT
+        count(member_id) count
+        from
+        `like`
+        where member_id = #{memberId}
+    </select>
+
+    <insert id="reg" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product(
+        name,
+        price,
+        description,
+        main_img_path,
+        category_id,
+        is_displayed,
+        is_sold,
+        code,
+        is_delivery_today,
+        discount_rate)
+        VALUES (
+        #{name},
+        #{price},
+        #{description},
+        #{mainImgPath},
+        #{categoryId},
+        #{displayed},
+        #{sold},
+        #{code},
+        #{deliveryToday},
+        #{discountRate})
+    </insert>
+
+    <update id="updateById">
+        UPDATE product
+        SET name = #{name},
+        price = #{price},
+        main_img_path = #{mainImgPath},
+        description = #{description},
+        is_displayed = #{displayed},
+        is_sold = #{sold},
+        code = #{code},
+        is_delivery_today = #{deliveryToday},
+        discount_rate = #{discountRate},
+        category_id = #{categoryId}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAll" parameterType="list">
+        DELETE FROM product
+        WHERE id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateAll" parameterType="java.util.List">
+        <foreach collection="list" item="product" separator=";">
+            <trim prefix="UPDATE product SET" suffixOverrides=",">
+                <if test="product.name != null">
+                    name = #{product.name},
+                </if>
+                <if test="product.price != null">
+                    price = #{product.price},
+                </if>
+                <if test="product.description != null">
+                    description = #{product.description},
+                </if>
+                <if test="product.mainImgPath != null">
+                    main_img_path = #{product.mainImgPath},
+                </if>
+                <if test="product.displayed != null">
+                    is_displayed = #{product.displayed},
+                </if>
+                <if test="product.sold != null">
+                    is_sold = #{product.sold},
+                </if>
+                <if test="product.code != null">
+                    code = #{product.code},
+                </if>
+                <if test="product.deliveryToday != null">
+                    is_delivery_today = #{product.deliveryToday},
+                </if>
+                <if test="product.discountRate != null">
+                    discount_rate = #{product.discountRate},
+                </if>
+                <if test="product.categoryId != null">
+                    category_id = #{product.categoryId},
+                </if>
+                <!-- 추가적인 필드들에 대한 업데이트 처리 -->
+            </trim>
+            WHERE id = #{product.id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,26 @@
+<!DOCTYPE >
+<html lang="en" layout:decorate="~{/inc/layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+</head>
+<body>
+<main layout:fragment="main" class="container mx-auto px-10">
+    <form action="" method="post" class="flex flex-col">
+        <label>
+            제목
+            <input name="title" th:value="${notice.title}"/>
+        </label>
+        <label>
+            내용
+            <textarea name="content" th:text="${notice.content}">
+
+            </textarea>
+        </label>
+
+        <button class="btn self-end">수정</button>
+    </form>
+</main>
+</body>
+</html>

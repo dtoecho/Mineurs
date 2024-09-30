@@ -1,0 +1,23 @@
+<!DOCTYPE >
+<html lang="en" layout:decorate="~{/inc/layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+</head>
+<body>
+<main layout:fragment="main" class="container mx-auto px-10">
+    <section>
+        <h1 th:text="|제목: ${notice.title}|">
+        </h1>
+        <div th:text="|작성일: ${notice.regDateTime}|"></div>
+        <div class="divider"></div>
+        <p th:text="|내용: ${notice.content}|">
+
+        </p>
+        <a  sec:authorize="hasRole('ADMIN')" class="btn" th:href="@{/notices/{id}/edit(id=${notice.id})}">수정</a>
+    </section>
+</main>
+</body>
+</html>

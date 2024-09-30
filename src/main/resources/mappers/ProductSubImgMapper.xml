@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.ProductSubImgRepository">
+
+    <insert id="reg" parameterType="ProductSubImg" useGeneratedKeys="true" keyProperty="id">
+        insert into sub_img(path, product_id)
+        values
+        <foreach collection="list" item="productSubImg" separator=",">
+            (#{productSubImg.path}, #{productSubImg.productId})
+        </foreach>
+    </insert>
+
+    <select id="findAll" resultType="ProductSubImg">
+        select * from sub_img where product_id = #{productId}
+    </select>
+
+    <update id="updatedImgs">
+        <foreach collection="list" item="sub_img" separator=";">
+            UPDATE sub_img
+            SET path = #{sub_img.path}
+            WHERE product_id = #{sub_img.productId} and id = #{sub_img.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteAll" parameterType="list">
+        DELETE FROM sub_img
+        WHERE id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+</mapper>

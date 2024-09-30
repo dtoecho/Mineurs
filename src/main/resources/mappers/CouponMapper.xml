@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.CouponRepository">
+    <select id="findAll" resultType="Coupon">
+        SELECT
+        *
+        FROM coupon
+    </select>
+    <select id="findById" parameterType="Coupon">
+        select * from coupon where id=#{id}
+    </select>
+    <select id="findAllByMemberId" parameterType="Coupon">
+        SELECT *
+        FROM coupon
+        INNER JOIN member_coupon ON coupon.id = member_coupon.coupon_id
+        where member_id = #{id}
+    </select>
+
+    <select id="findValidByMemberId" parameterType="Coupon">
+        SELECT *
+        FROM coupon
+        INNER JOIN member_coupon ON coupon.id = member_coupon.coupon_id
+        WHERE member_coupon.member_id = ${id}
+        AND member_coupon.used = 0
+        AND CURDATE() &gt;= coupon.valid_date_start
+        AND CURDATE() &lt;= coupon.valid_date_end
+    </select>
+
+    <select id="findInvalidByMemberId" parameterType="Coupon">
+        SELECT coupon.*, member_coupon.*, `order`.ordered_datetime
+        FROM coupon
+        INNER JOIN member_coupon ON coupon.id = member_coupon.coupon_id
+        left JOIN `order` ON `order`.member_id = member_coupon.member_id AND `order`.coupon_id = coupon.id
+        WHERE member_coupon.member_id = ${id}
+        AND (CURDATE() &gt;= coupon.valid_date_end OR member_coupon.used = 1)
+    </select>
+</mapper>

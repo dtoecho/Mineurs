@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.NoticeRepository">
+    <select id="findAll" resultType="Notice">
+        select id, summary title, reg_datetime reg_date_time, content from notice;
+    </select>
+    <select id="findById" resultType="Notice">
+        select id, summary title, reg_datetime reg_date_time, content from notice where id = #{id};
+    </select>
+    <insert id="reg" >
+        insert into notice(summary, content, board_id, member_id) values (#{notice.title}, #{notice.content}, 1, #{memberId})
+    </insert>
+
+    <delete id="deleteAll" parameterType="list">
+        delete from notice
+        where  id in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update" >
+        update notice
+        set
+
+        summary = #{notice.title},
+        content = #{notice.content},
+        board_id = 1,
+        member_id = #{memberId}
+
+        where id = #{notice.id}
+    </update>
+
+
+</mapper>

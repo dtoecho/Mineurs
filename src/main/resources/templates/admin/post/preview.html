@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/admin/inc/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>preview</title>
+
+</head>
+<body>
+<main layout:fragment="main" class="n-panel n-main-panel">
+    <form class="n-form md:n-field-label-position:left w:100p">
+        <div class="w:100p">
+            <label>
+                <span>제목</span>
+                <input type="text" placeholder="placeholder" readonly/>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>작성자</span>
+                <input type="text" placeholder="placeholder" readonly/>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>답변상태</span>
+                <input type="text" placeholder="placeholder" readonly/>
+            </label>
+        </div>
+        <div>
+            <label>
+                <span>원글</span>
+                <input type="text" placeholder="placeholder" readonly/>
+            </label>
+        </div>
+    </form>
+</main>
+</body>
+</html>

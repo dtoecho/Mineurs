@@ -1,0 +1,252 @@
+<!DOCTYPE >
+<html lang="en" layout:decorate="~{/inc/layout-checkout}" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+</head>
+<body>
+<main layout:fragment="main" class="flex flex-col container mx-auto px-10 pt-10">
+    <h1 class="font-bold text-3xl">주문/결제</h1>
+
+    <section class="overflow-x-auto">
+        <h1 class="text-2xl">구매자 정보</h1>
+        <table class="table">
+            <colgroup>
+                <col class="bg-base-300"/>
+            </colgroup>
+
+            <tbody>
+            <tr>
+                <td>이름</td>
+                <td>홍길동</td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td>sjejeje@gmail.com</td>
+            </tr>
+            <tr>
+                <td>휴대폰 번호</td>
+                <td class="flex flex-col space-y-4">
+                    <div class="flex items-center space-x-5">
+                        <div>
+                            <input type="text" placeholder="010-3939-1818"
+                                   class="input input-bordered w-full max-w-xs h-8" disabled/>
+                            <button class="btn btn-sm h-8">수정</button>
+                        </div>
+                        <div>쿠폰/티켓정보는 구매한 분의 번호로 전송됩니다.</div>
+                    </div>
+                    <div>* 인증 번호를 못 받았다면, 1577-7011 번호 차단 및 스팸 설정을 확인해 주세요.</div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+    <section class="overflow-x-auto">
+        <div class="flex">
+            <h1 class="text-2xl mb-0">받는사람 정보</h1>
+            <button class="btn btn-sm h-8">
+                배송지변경
+            </button>
+        </div>
+        <table class="table">
+            <colgroup>
+                <col class="bg-base-300"/>
+            </colgroup>
+
+            <tbody>
+            <tr>
+                <td>이름</td>
+                <td class="flex items-center space-x-4">
+                    <span>홍길동</span>
+                    <div class="badge badge-outline">기본배송지</div>
+                </td>
+            </tr>
+            <tr>
+                <td>배송주소</td>
+                <td>서울시 서대문구 신촌로 121</td>
+            </tr>
+            <tr>
+                <td>연락처</td>
+                <td>010 - 2929 - 9389</td>
+            </tr>
+            <tr>
+                <td>배송 요청사항</td>
+                <td class="flex items-center space-x-4">
+                    <span>일반 : 문 앞 / 문 앞 (자유출입가능)</span>
+                    <button class="btn btn-sm h-8">
+                        변경
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+    <section class="overflow-x-auto">
+        <h1 class="text-xl">배송 2건 중 1</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="bg-base-300" colspan="2">금요일 4/12 도착 예정</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+
+                    <div class="grid grid-cols-2 border-b border-b-base-300 pb-4">
+                        <span>
+                            KENDA K1177 세미슬릭 MTB 타이어 26x1.95, 1개
+                        </span>
+                        <span>
+                             수량 1개 / 배송비 3,000원
+                        </span>
+                    </div>
+
+
+                    <div class="grid grid-cols-2 py-4">
+                        <span>
+                           1+1 흥아 26x1.95/1.75-2.125 EV 26인치 MTB 자전거 튜브 던롭, 26x1.75/2.125 던롭
+                        </span>
+                        <span>
+                             수량 1개 / 배송비 3,000원
+                        </span>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+    <section class="overflow-x-auto">
+        <h1 class="text-xl">배송 2건 중 2</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="bg-base-300" colspan="2">금요일 4/12 도착 예정</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+                    <div class="grid grid-cols-2 pb-4">
+                        <span>
+                            KENDA K1177 세미슬릭 MTB 타이어 26x1.95, 1개
+                        </span>
+                        <span>
+                             수량 1개 / 배송비 3,000원
+                        </span>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+    <section class="overflow-x-auto">
+        <h1 class="text-2xl mb-0">결제 정보</h1>
+        <table class="table">
+            <colgroup>
+                <col class="bg-base-300"/>
+            </colgroup>
+
+            <tbody>
+            <tr>
+                <td>총 상품가격</td>
+                <td class="flex items-center space-x-4">
+                    <span>78,360원</span>
+                </td>
+            </tr>
+            <tr>
+                <td>할인 쿠폰</td>
+                <td>
+                    <span class="text-accent">
+                        0원
+                    </span>
+                    <span>적용 가능한 할인쿠폰이 없습니다.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>배송비</td>
+                <td>6,000원</td>
+            </tr>
+            <tr>
+                <td>총 결제금액</td>
+                <td class="flex items-center space-x-4">
+                    <span class="text-xl">84,360원</span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h1 class="text-2xl">결제 수단</h1>
+        <div class="border border-base-300">
+            <section class="form-control flex flex-col">
+                <h1 class="mb-4">
+                    <label class="label cursor-pointer flex justify-start space-x-3">
+                        <input type="radio" name="radio-10" class="radio" checked/>
+                        <span class="label-text">신용/체크카드</span>
+                    </label>
+                </h1>
+                <div class="flex flex-col mx-10">
+                    <div class="flex">
+                        <select class="select select-bordered w-full max-w-xs">
+                            <option>NH농협채움 글로벌체크.../3893**...</option>
+                            <option>Greedo</option>
+                        </select>
+                        <select class="select select-bordered w-full max-w-xs" disabled>
+                            <option>일시불</option>
+                            <option>Greedo</option>
+                        </select>
+                    </div>
+                    <ul class="text-sm">
+                        <li>할부는 5만원 이상부터 가능합니다</li>
+                        <li>해외발급 카드는 쿠팡 앱, 모바일 웹에서 사용 가능합니다</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="text-xs space-y-4">
+        <div class="flex justify-between">
+            <span> 구매조건 확인 및 결제대행 서비스 약관 동의 </span>
+            <a href="">보기</a>
+        </div>
+        <div class="flex justify-between">
+            <span> 개인정보 제3자 제공 동의 </span>
+            <a href="">보기</a>
+        </div>
+        <div class="flex justify-between">
+            <span> 쿠팡풀필먼트서비스(유)의 개인정보 제3자 제공 동의 </span>
+            <a href="">보기</a>
+        </div>
+        <div>
+            <span>* 개별 판매자가 등록한 마켓플레이스(오픈마켓) 상품에 대한 광고, 상품주문,
+                배송 및 환불의 의무와 책임은 각 판매자가 부담하고, 이에 대하여 쿠팡은
+                통신판매중개자로서 통신판매의 당사자가 아니므로 일체 책임을 지지 않습니다.
+            </span>
+        </div>
+        <div class="flex justify-center">
+            <span>위 주문 내용을 확인 하였으며, 회원 본인은 개인정보 이용 및 제공(해외직구의 경우 국외제공) 및 결제에 동의합니다. </span>
+        </div>
+    </section>
+    <button class="btn btn-wide btn-primary self-center mt-4 text-2xl">결제하기</button>
+
+
+
+
+
+</main>
+</body>
+</html>

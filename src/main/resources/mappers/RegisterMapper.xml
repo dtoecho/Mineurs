@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.RegisterRepository">
+<!--    <resultMap id="Member" type="Member">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result property="emailReception" column="email_reception"/>-->
+<!--        <result property="smsReception" column="sms_reception"/>-->
+<!--    </resultMap>-->
+<!--    <insert id="save" parameterType="Member" useGeneratedKeys="true" keyProperty="id" >-->
+<!--        insert into member(username,password,name,phone_number,email,sms_reception,email_reception,enabled)-->
+<!--        values -->
+<!--        (#{username},#{password},#{name},#{phoneNumber},#{email},#{smsReception},#{emailReception},#{enabled})-->
+<!--    </insert>-->
+    <insert id="save" parameterType="Member" useGeneratedKeys="true" keyProperty="id" >
+        insert into member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phoneNumber != null">
+                phone_number,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="smsReception != null">
+                sms_reception,
+            </if>
+            <if test="emailReception != null">
+                email_reception,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="smsReception != null">
+                #{smsReception},
+            </if>
+            <if test="emailReception != null">
+                #{emailReception},
+            </if>
+            <if test="enabled != null">
+                #{enabled},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findById">
+        select * from member where email = #{email}
+    </select>
+</mapper>

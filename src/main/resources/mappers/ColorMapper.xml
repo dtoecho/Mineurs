@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.ColorRepository">
+    <select id="findAll" resultType="Color">
+        SELECT
+        *
+        FROM color
+    </select>
+
+    <select id="findById" resultType="Color">
+        SELECT
+        *
+        FROM color
+        where id = #{id}
+    </select>
+
+
+    <select id="findByKorNameContaining" resultType="Color">
+        SELECT
+        *
+        FROM color
+        where kor_name like '%${query}%'
+    </select>
+
+    <select id="findIdByKorName" resultType="Long">
+        SELECT
+        id
+        FROM color
+        where kor_name = #{korName}
+    </select>
+
+    <insert id="save" parameterType="Color">
+        insert into color(kor_name, eng_name, hex_code)
+        values (#{korName},#{engName},#{hexCode})
+    </insert>
+
+    <delete id="deleteAllById" parameterType="list">
+        DELETE FROM color
+        WHERE id IN
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

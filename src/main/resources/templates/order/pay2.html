@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <script src="/js/input.js"></script>
+</head>
+
+<body class="bg-white h-screen">
+  <!--main-->
+  <main layout:fragment="main" class="container mx-auto mt-32 border text-lg">
+    <div class="h-20 flex items-center border-b">
+      <p class="ml-6 text-xl">배송지</p>
+    </div>
+    <div class="h-20 flex items-center text-lg">
+      <p class="ml-6 text-lg w-28">받는사람</p>
+      <input type="text" class="border">
+    </div>
+    <div class="h-20 flex items-center text-lg">
+      <p class="ml-6 text-lg w-28">주소</p>
+      <input type="text" class="border">
+    </div>
+    <div class="h-20 flex items-center">
+      <p class="ml-6 text-lg w-28">휴대전화</p>
+      <input type="text" class="border w-20" autocomplete="off" list="number-list" />
+      <datalist id="number-list">
+        <option>010</option>
+        <option>011</option>
+        <option>016</option>
+        <option>017</option>
+        <option>018</option>
+        <option>019</option>
+      </datalist>
+      <span>-</span>
+      <input type="text" class="border">
+      <span>-</span>
+      <input type="text" class="border">
+    </div>
+    <div class="h-20 flex items-center">
+      <p class="ml-6 text-lg w-28">이메일</p>
+      <input type="text" class="border">
+      <span>@</span>
+      <input type="text" class="border" autocomplete="off" list="email-list" />
+      <datalist id="email-list">
+        <option>naver.com</option>
+        <option>gmail.com</option>
+        <option>daum.net</option>
+      </datalist>
+    </div>
+    <div class="bg-base-200 h-20 flex items-center text-lg">
+      <input type="text" class="border ml-10 w-96 h-12" list="request-list" placeholder="   -배송 메세지 선택 (선택사항)-">
+      <datalist id="request-list">
+        <option>배송 전에 미리 연락 바랍니다.</option>
+        <option>부재 시 경비실에 맡겨주세요.</option>
+        <option>부재 시 문 앞에 놓아주세요.</option>
+        <option>빠른 배송 부탁드립니다.</option>
+        <option>택배함에 보관해주세요.</option>
+      </datalist>
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div>
+      <div class="h-20 flex items-center text-lg border-b">
+        <p class="ml-6 text-xl">주문상품</p>
+      </div>
+      <div class="h-40">
+        상품 내용
+      </div>
+      <div class="h-20 bg-base-200 mx-6 my-6 flex items-center">
+        <p class="ml-6">배송비</p>
+        <p class="ml-80 ">00원</p>
+      </div>
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div class="">
+      <div class="h-20 flex items-center border-b">
+        <p class="ml-6">할인/부가결제</p>
+      </div>
+      <div class="flex h-44 items-center pl-6">
+        <p>적립금</p>
+        <div class="ml-12">
+          <input type="text" class="border h-12" value="0">
+          <p>보유잔액</p>
+        </div>
+      </div>
+      <div class="bg-base-200 h-20 flex items-center mx-6 my-6">
+        <p class="ml-6">적용금액</p>
+        <p class="ml-12">0원</p>
+      </div>
+
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div class="">
+      <div class="h-20 flex items-center border-b">
+      </div>
+      <div class="h-40">
+        <div class="flex ml-6 my-10">
+          <p class="w-52">상품금액</p>
+          <p>000원</p>
+        </div>
+        <div class="flex ml-6 my-4">
+          <p class="w-52">배송비</p>
+          <p>+000원</p>
+        </div>
+        <div class="flex ml-6 my-4">
+          <p class="w-52">할인/부가결제</p>
+          <p>-000원</p>
+        </div>
+      </div>
+      <div class="bg-base-200 h-20 flex items-center mx-6 mb-6">
+        <p class="ml-6 w-52">결제 금액</p>
+        <p>000원</p>
+      </div>
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div class="">
+      <div class="h-20 flex items-center border-b">
+        <p class="ml-6 text-xl">결제 수단</p>
+      </div>
+      <div>
+        <div class="border my-4 mx-10">
+          <div class="border-b h-20 flex items-center bg-base-200">
+            <p class="font-bold ml-6">결제수단 선택</p>
+          </div>
+          <div class="my-6 mx-6 border">
+            <div class="h-20 border-b flex items-center">
+              <p class="ml-6">무통장입금</p>
+            </div>
+            <div class="h-20 flex items-center">
+              <p class="ml-6">계좌이체</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-base-200 mx-6 my-6">
+          <div class="h-20 flex items-center">
+            <p class="ml-6">입금은행</p>
+            <input class="ml-6 border" type="text" placeholder="선택해주세요">
+          </div>
+          <div class="h-20 flex items-center">
+            <p class="ml-6">입금자명</p>
+            <input class="ml-6 border" type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div class="">
+      <div class="h-20 flex items-center">
+        <p class="ml-6">적립 혜택</p>
+        <p class="ml-20 text-xl">000원 예정</p>
+      </div>
+    </div>
+    <div class="bg-base-300 h-5">
+
+    </div>
+    <div>
+      <div class="h-20 bg-base-200 flex items-center mx-6 my-6">
+        <p class="ml-6 text-xl">구매조건 확인 및 결제진행 동의</p>
+      </div>
+      <div class="h-20 flex items-center justify-center text-xl">
+        <p>주문 내용을 확인하였으며 약관에 동의합니다.</p>
+        <input type="checkbox" class="checkbox">
+      </div>
+      <div class="bg-base-200 h-24 py-4">
+        <div class="bg-kakao text-xl h-16 mx-6 flex items-center justify-center">
+          <p>000원 결제하기</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

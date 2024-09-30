@@ -1,0 +1,120 @@
+main {
+    background-color: #f8f8f8;
+}
+
+form .icon::before {
+    --color-sub-2: #37b24d;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 28px 0;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    width: 100%;
+    border-bottom: 1px solid var(--color-base-3);
+}
+
+.google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 20px;
+    padding-left: 24px;
+
+    background-image: url("/image/icon/google_logo.svg");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+/* username */
+
+.username input:not(:placeholder-shown):invalid {
+    border-color: var(--textbox-border-color-warning) !important;
+}
+
+.username input:not(:placeholder-shown):invalid ~ .invalid-icon {
+    display: inline-block !important;
+}
+
+.username input:not(:placeholder-shown):valid {
+    border-color: var(--textbox-border-color-success) !important;
+}
+
+.username input:not(:placeholder-shown):valid ~ .invalid-icon {
+    display: none !important;
+}
+
+.username input:not(:placeholder-shown):valid ~ .valid-icon {
+    display: inline-block !important;
+}
+
+.username div:has(input:not(:placeholder-shown):invalid) ~ ul .invalid-username{
+    display: inline-block !important;
+}
+
+/* email */
+
+.email input:not(:placeholder-shown):invalid {
+    border-color: var(--textbox-border-color-warning) !important;
+}
+
+.email input:not(:placeholder-shown):invalid ~ .invalid-icon {
+    display: inline-block !important;
+}
+
+.email input:not(:placeholder-shown):valid {
+    border-color: var(--textbox-border-color-success) !important;
+}
+
+.email input:not(:placeholder-shown):valid ~ .invalid-icon {
+    display: none !important;
+}
+
+.email input:not(:placeholder-shown):valid ~ .valid-icon {
+    display: inline-block !important;
+}
+
+.email div:has(input:not(:placeholder-shown):invalid) ~ ul .invalid-email {
+    display: inline-block !important;
+}
+
+/* password */
+
+.password input:not(:placeholder-shown):invalid {
+    border-color: var(--textbox-border-color-warning) !important;
+}
+
+.password input:not(:placeholder-shown):valid {
+    border-color: var(--textbox-border-color-success) !important;
+}
+
+.password input:not(:placeholder-shown):invalid ~ .invalid-icon {
+    display: inline-block !important;
+}
+
+.password input:not(:placeholder-shown):valid ~ .invalid-icon {
+    display: none !important;
+}
+
+.password input:not(:placeholder-shown):valid ~ .valid-icon {
+    display: inline-block !important;
+}
+
+.password label:has(input:not(:placeholder-shown):invalid) ~ .invalid-password {
+    display: inline-block !important;
+}
+
+/* confirm-password */
+
+.confirm-password input:not(:placeholder-shown) ~ .icon {
+    display: inline-block !important;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.PointRepository">
+
+<select id="findById" resultType="pointView">
+    select
+    * FROM
+    point_list_view where member_id = #{memberId}
+</select>
+    <insert id="save" >
+        INSERT INTO
+        point (accumulate_point,member_id,order_id)
+        values
+        (#{point},#{memberId},#{id})
+    </insert>
+
+    <select id="findPointById" resultType="point">
+        select
+        * FROM
+        point where member_id = #{memberId}
+    </select>
+
+</mapper>

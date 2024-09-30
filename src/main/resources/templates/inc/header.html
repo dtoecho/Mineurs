@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="/js/searchModal.js" defer></script>
+  </head>
+  <body>
+    <header class="navbar  mb-10 fixed top-0 z-50
+transition-[background-color, opacity] duration-300 ease-in-out hover:bg-white hover:opacity-90 hover:shadow-sm">
+
+      <!--   검색 모달   -->
+      <div class="fixed left-0 top-0 z-40 flex h-screen w-full items-center justify-center overflow-hidden bg-white opacity-90 transition-[max-height] duration-300 max-h-0"
+      :class="{'max-h-0': !isSearchModalActive, 'max-h-screen': isSearchModalActive}">
+        <form method="get" class="flex w-96 border-b border-gray-500 px-2 py-3">
+          <button>Search</button>
+          <input type="hidden" name="searchMethod" value="name">
+          <input type="text" ref="searchInput" name="searchKeyword" class="ml-4 w-full outline-none">
+        </form>
+      </div>
+
+      <h1 class="hidden">헤더</h1>
+      <div class="flex-1">
+        <a href="/">
+          <img
+            src="https://mineurs.co.kr/web/upload/hazel/logo_img.png"
+            alt=""
+            class="w-52 px-2"
+          />
+        </a>
+      </div>
+      <div class="   md:flex px-10">
+        <div class="dropdown dropdown-hover">
+          <div tabindex="0" role="button" class="summary text-base m-4">
+            Shop
+          </div>
+          <ul
+            tabindex="0"
+            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+
+            <li><a th:href="@{/(categoryId='')}">ALL</a></li>
+            <li th:each="category:${categoryList}"><a th:href="@{/(categoryId=${category.id})}" href="" th:text="${category.name}">Category</a></li>
+<!--            <li><a href="">Top</a></li>-->
+<!--            <li><a href="">Bottom</a></li>-->
+<!--            <li><a href="">Dress</a></li>-->
+<!--            <li><a href="">ETC</a></li>-->
+          </ul>
+        </div>
+        <div class="dropdown dropdown-hover">
+          <div tabindex="0" role="button" class="summary text-base m-4">
+            Board
+          </div>
+          <ul
+            tabindex="0"
+            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li><a href="/notices">NOTICE</a></li>
+            <li><a href="/qna">Q&A</a></li>
+          </ul>
+        </div>
+        <div class="dropdown dropdown-hover">
+          <div tabindex="0" role="button" class="summary text-base">
+            Account
+          </div>
+          <ul
+            tabindex="0"
+            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li sec:authorize="isAnonymous()">
+              <a href="/login">Login</a>
+            </li>
+
+            <li sec:authorize="isAuthenticated()">
+              <a  href="/logout">Logout</a>
+            </li>
+
+            <li sec:authorize="isAnonymous()"><a href="/register">Register</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/myshop/order/list">Order</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="/myshop">My Page</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mr-10 text-xs text-gray-400 space-x-4" sec:authorize="isAuthenticated()">
+        <span>Welcome!,</span> <span sec:authentication="name">망한거임</span>
+      </div>
+
+      <div>
+        <a sec:authorize="!isAuthenticated()" 
+          th:href="@{/login}">
+          <img src="/css/img/cart.svg" alt="" />
+        </a>
+        <a sec:authorize="isAuthenticated()" 
+          th:href="@{/cart(mid=${#authentication.getPrincipal().id})}">
+          <img src="/css/img/cart.svg" alt="" />
+        </a>
+      </div>
+      <div class="m-4" @click.prevent="searchModalClickHandler">
+        <img v-if="!isSearchModalActive" src="/css/img/search.svg" alt="" />
+        <span v-else class="icon-[iconoir--cancel] block w-8 h-8 z-50"></span>
+      </div>
+    </header>
+  </body>
+</html>

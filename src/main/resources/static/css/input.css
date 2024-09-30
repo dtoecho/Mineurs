@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Thin.woff') format('woff');
+        font-weight: 100;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-ExtraLight.woff') format('woff');
+        font-weight: 200;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Light.woff') format('woff');
+        font-weight: 300;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Medium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-SemiBold.woff') format('woff');
+        font-weight: 600;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Bold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-ExtraBold.woff') format('woff');
+        font-weight: 800;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Pretendard';
+        src: url('/font/pretendard/woff/Pretendard-Black.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream1.otf') format('opentype');
+        font-weight: 100;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream2.otf') format('opentype');
+        font-weight: 200;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream3.otf') format('opentype');
+        font-weight: 300;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream4.otf') format('opentype');
+        font-weight: 400;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream5.otf') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream6.otf') format('opentype');
+        font-weight: 600;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream7.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream8.otf') format('opentype');
+        font-weight: 800;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Score';
+        src: url('/font/S-Core_Dream_OTF/SCDream9.otf') format('opentype');
+        font-weight: 900;
+        font-style: normal;
+    }
+
+
+
+    body {
+        font-family: Score, Pretendard, Arial, Helvetica, sans-serif;
+    }
+
+
+
+
+}
+
+@layer components{
+    .drawer-toggle ul{
+        background-color: red;
+    }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <script src="/js/input.js"></script>
+</head>
+
+<body class="bg-white">
+  <!--main-->
+  <main layout:fragment="main" class="container mx-auto mt-32">
+    <section class="py-10 px-8 flex flex-col">
+      <h1 class="text-4xl ml-4">주문 내역</h1>
+      <div class="flex justify-around">
+        <div class="w-52"></div>
+        <div class="mr-32">옵션</div>
+        <div>수량</div>
+        <div>금액</div>
+      </div>
+      <div class="border-y py-2">
+        <div class="flex justify-around items-center" th:each="i : ${#numbers.sequence(0, productList.size() - 1)}">
+          <div class="m-0"><img th:src="@{'/webapp/image/products/'+${productList[i].mainImgPath}}" class="max-h-40 h-32 m-0 mx-auto my-6"
+              alt="이미지" /></div>
+          <div class="text-center w-96 text-lg">
+            <span th:text="${productList[i].name}"></span>
+            <br>
+            컬러 : <span th:text="${colorList[i].engName}"></span>
+            <br>
+            사이즈 : <span th:text="${sizeList[i].engName}"></span>
+          </div>
+          <div><span th:text="${orderItemList[i].qty}" class="text-3xl">수량</span></div>
+          <div th:with="price=${orderItemList[i].qty}*${productList[i].price}" 
+          th:text="${#numbers.formatInteger(price, 3, 'COMMA') + '원'}"
+          class="text-center text-xl">금액</div>
+        </div>
+      </div>
+    </section>
+    <section class="px-8 flex flex-col text-xl">
+      <h1 class="text-4xl mb-2 ml-4">결제 금액</h1>
+      <div class="border-y py-6 px-8">
+        <div class="flex mb-4">
+          <div class="mr-10 w-40 text-3xl">상품 금액</div>
+          <div class="text-2xl" th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA') + '원'}"></div>
+        </div>
+        <div class="flex mb-4">
+          <div class="mr-10 w-40 text-3xl">배송비</div>
+          <div class="text-2xl">0원</div>
+        </div>
+        <div class="flex">
+          <div class="mr-10 w-40 text-3xl">총결제 금액</div>
+          <div class="text-2xl" th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA') + '원'}"></div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-6 px-8">
+      <h1 class="hidden">추가 정보</h1>
+      <div class="border-y py-6 px-8">
+        <div class="flex mb-6">
+          <div class="mr-10 w-40 text-3xl">주문일자</div>
+          <div class="text-2xl" th:text="${#dates.format(orderView.orderedDatetime,'yyyy-MM-dd')}"></div>
+        </div>
+        <div class="flex">
+          <div class="mr-10 w-40 text-3xl">배송상태</div>
+          <div class="text-2xl" th:text="${orderView.orderState}"></div>
+        </div>
+      </div>
+    </section>
+    <div class="flex mt-10 justify-center">
+      <div class="ml-10"><a href="/myshop/order/list" class="btn btn-outline text-2xl w-32">뒤로가기</a></div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/inc/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <main layout:fragment="main" class="container mx-auto mt-16">
+        <!-- 장바구니 -->
+        <section class="flex flex-col">
+            <h1 class="text-center text-base font-black text-3xl my-8">장바구니</h1>
+            <table class="n-table n-table-style:striped border-2">
+                <thead class="border-b-2 h-16">
+                    <tr>
+                        <th scope="col" class="text-center"><input type="checkbox" class="checkbox"></th>
+                        <th scope="col" class="text-center">이미지</th>
+                        <th scope="col" class="text-center">상품정보</th>
+                        <th scope="col" class="text-center">수량</th>
+                        <th scope="col" class="text-center">상품구매금액</th>
+                        <th scope="col" class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody th:if="!${#lists.isEmpty(cartList)}">
+                    <tr th:each="i : ${#numbers.sequence(0, productList.size() - 1)}">
+                        <form id="selectedList" method="post" action="cart/user-action-selected">
+                            <input type="hidden" th:value="${param.mid}" name="memberId" />
+                            <th scope="col" class="text-center">
+                                <input type="checkbox" class="checkbox" name="cartId" th:value="${cartList[i].id}">
+                            </th>
+                        </form>
+                        <th scope="col" class="text-center">
+                            <img th:src="@{'/webapp/image/products/'+${productList[i].mainImgPath}}"
+                                class="max-h-40 mx-auto my-6" alt="이미지" />
+                        </th>
+                        <th scope="col" class="text-center">
+                            <span th:text="${productList[i].name}"></span>
+                            <br>
+                            컬러 : <span th:text="${colorList[i].engName}"></span>
+                            <br>
+                            사이즈 : <span th:text="${sizeList[i].engName}"></span>
+                        </th>
+                        <th scope="col" class="h-40 mt-5 flex justify-center items-center">
+                            <form method="post" action="cart/qty">
+                                <input type="hidden" th:value="${param.mid}" name="mid" />
+                                <input type="hidden" th:value="${cartList[i].id}" name="cartId" />
+                                <input type="hidden" th:value="${cartList[i].qty}" name="qty" />
+                                <input type="hidden" name="qtyJudge" value="0" />
+                                <button class="mr-3 text-2xl">-</button>
+                            </form>
+                            <span th:text="${cartList[i].qty}" class="text-3xl">수량</span>
+                            <form method="post" action="cart/qty">
+                                <input type="hidden" th:value="${param.mid}" name="mid" />
+                                <input type="hidden" th:value="${cartList[i].id}" name="cartId" />
+                                <input type="hidden" th:value="${cartList[i].qty}" name="qty" />
+                                <input type="hidden" name="qtyJudge" value="1" />
+                                <button class="ml-3 text-2xl">+</button>
+                            </form>
+                        </th>
+                        <th scope="col" th:with="price=${cartList[i].qty}*${productList[i].price}" 
+                        th:text="${#numbers.formatInteger(price, 3, 'COMMA') + '원'}"
+                            class="text-center text-xl">상품구매금액
+                        </th>
+                        <th scope="col" class="text-center">
+                            <form method="post" action="cart/user-action-each">
+                                <input type="hidden" th:value="${cartList[i].id}" name="cartId" />
+                                <input type="hidden" th:value="${param.mid}" name="memberId" />
+                                <input type="hidden" th:value="${productList[i].id}" name="productId" />
+                                <input type="hidden" th:value="${colorList[i].id}" name="colorId" />
+                                <input type="hidden" th:value="${sizeList[i].id}" name="sizeId" />
+                                <input type="hidden" th:value="${cartList[i].qty}" name="qty" />
+                                <div><button name="userAction" value="1" class="h-8 w-24 border-2">주문하기</button></div>
+                                <div><button name="userAction" value="2" class="mt-2 h-8 w-24 border-2">삭제</button></div>
+                            </form>
+                        </th>
+                    </tr>
+                </tbody>
+                <tbody th:if="${#lists.isEmpty(cartList)}">
+                    <tr class="h-40">
+                        <th></th>
+                        <th></th>
+                        <th scope="col" class="text-center">
+                            장바구니가 비었습니다.
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="flex justify-between">
+                <div class="h-10 mt-2 flex justify-start font-bold">
+                    <button form="selectedList" name="userAction" value="1" class="w-20 border-2">선택주문</button>
+                    <button form="selectedList" name="userAction" value="2" class="w-20 border-2">선택삭제</button>
+                </div>
+                <form method="post" action="cart/user-action-all">
+                    <div class="h-10 mt-2 flex justify-end font-bold">
+                        <input type="hidden" th:value="${param.mid}" name="memberId" />
+                        <button name="userAction" value="1" class="mr-10 w-24 border-2">전체주문</button>
+                        <button name="userAction" value="2" class="w-24 border-2">전체삭제</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/inc/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+  <body>
+    <main layout:fragment="main" class="container mx-auto px-20 mt-20">
+
+      <section class="w-full">
+        <h1 class="hidden">마이페이지</h1>
+        <div class="text-center font-serif">My Page</div>
+        <div class="text-base mt-10">
+          <ul class="list-none flex justify-center text-sm">
+            <li class="px-2">가용적립금 <span  th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')} +원"></span></li>
+            <li>
+              <a class="btn btn-xs" href="myshop/point">조회</a>
+            </li>
+            <li class="px-2">총적립금 <span th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')} +원"></span></li>
+            <li class="px-2">사용적립금 0원</li>
+            <li class="px-2">총주문 <span th:text="${totalOrderCount}"></span>회</li>
+            <li class="px-2">쿠폰 0개</li>
+            <li class="px-2">
+              <a class="btn btn-xs" href="myshop/coupon">조회</a>
+            </li>
+          </ul>
+        </div>
+        <div class="divider fill-black"></div>
+
+        <div class="flex flex-col w-full border border-slate-700">
+          <div class="text-gray-500 border-b border-slate-800 px-2">
+            <span class="font-semibold text-black">나의 주문처리 현황</span>
+            (최근 3개월 기준)
+          </div>
+          <div class="flex py-8 h-40">
+            <div class="flex flex-col justify-center text-center w-full">
+              <div>결제완료</div>
+              <a href="" class="font-bold" th:text="${orderStateCounts['결제완료']}">0</a>
+            </div>
+            <div
+              class="flex flex-col justify-center text-center w-full border-l-2 border-dotted border-slate-700"
+            >
+              <div>배송준비중</div>
+              <a href="" class="font-bold" th:text="${orderStateCounts['배송준비중']}">0</a>
+            </div>
+            <div
+              class="flex flex-col justify-center text-center w-full border-l-2 border-dotted border-slate-700"
+            >
+              <div>배송중</div>
+              <a href="" class="font-bold" th:text="${orderStateCounts['배송중']}">0</a>
+            </div>
+            <div
+              class="flex flex-col justify-center text-center w-full border-l-2 border-dotted border-slate-700"
+            >
+              <div>배송완료</div>
+              <a href="" class="font-bold" th:text="${orderStateCounts['배송완료']}">0</a>
+            </div>
+            <div
+              class="flex flex-col items-center justify-center text-center w-full border-l-2 border-dotted border-slate-700"
+            >
+              <ul class="pl-0">
+                <li class="w-fit">
+                  취소 :
+                  <span><a class="font-bold">0</a></span>
+                </li>
+                <li class="w-fit">
+                  교환 :
+                  <span><a class="font-bold">0 </a></span>
+                </li>
+                <li class="w-fit">
+                  반품 :
+                  <span><a class="font-bold">0 </a></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5">
+          <ul class="flex list-none justify-between">
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="myshop/order/list"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Order</span>
+                <span class="text-xs">주문내역 조회</span></a
+              >
+            </li>
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="/member/modify"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Profile</span>
+                <span class="text-xs">회원 정보</span></a
+              >
+            </li>
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="/myshop/wishlist"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Wishlist</span>
+                <span class="text-xs">관심 상품</span></a
+              >
+            </li>
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="/myshop/point"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Point</span>
+                <span class="text-xs">적립금</span></a
+              >
+            </li>
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="/myshop/coupon"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Coupon</span>
+                <span class="text-xs">쿠폰</span></a
+              >
+            </li>
+<!--            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">-->
+<!--              <a-->
+<!--                href="/myshop/post"-->
+<!--                class="flex flex-col justify-center items-center w-full"-->
+<!--                ><span class="font-medium">Board</span>-->
+<!--                <span class="text-xs">게시물 관리</span></a-->
+<!--              >-->
+<!--            </li>-->
+            <li class="border border-slate-950 w-28 h-28 flex text-sm px-0">
+              <a
+                href="/myshop/addr/list"
+                class="flex flex-col justify-center items-center w-full"
+                ><span class="font-medium">Address</span>
+                <span class="text-xs">배송 주소록 관리</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

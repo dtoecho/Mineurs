@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecmineursprj.repository.ProductItemRepository">
+
+    <select id="findAll" resultType="ProductItem">
+        SELECT
+        *
+        FROM
+        product_item
+    </select>
+
+    <select id="findById" resultType="ProductItem">
+        SELECT
+        *
+        FROM product_item
+        where id = #{id}
+    </select>
+
+    <select id="findByProductId" resultType="ProductItem">
+        SELECT
+        *
+        FROM product_item
+        where product_id = #{productId}
+    </select>
+
+    <select id="findByForeignKeys" resultType="ProductItem">
+        SELECT
+            *
+        FROM
+            product_item
+        WHERE
+            product_id = #{productId}
+            AND size_id = #{sizeId}
+            AND color_id = #{colorId}
+    </select>
+
+    <update id="stockDecrease">
+        UPDATE product_item
+        SET qty = qty - #{qty}
+        WHERE id = #{id};
+    </update>
+
+    <insert id="saveAll">
+        insert into product_item(
+        qty
+        , product_id
+        , size_id
+        , color_id
+        )
+        values
+        <foreach item="item" index="index" collection="list"  separator="," >
+            (
+            #{item.qty}
+            , #{item.productId}
+            , #{item.sizeId}
+            , #{item.colorId}
+            )
+        </foreach>
+    </insert>
+</mapper>
